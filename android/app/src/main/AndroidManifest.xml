@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     
     <!-- ছদ্মবেশী ভিপিএন স্ক্যান করার জন্য সব অ্যাপের তথ্য পাওয়ার পারমিশন -->
@@ -52,10 +54,14 @@
         <service
             android:name=".services.ShuddhoVpnService"
             android:permission="android.permission.BIND_VPN_SERVICE"
+            android:foregroundServiceType="specialUse"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.net.VpnService" />
             </intent-filter>
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="DNS-based content filtering" />
         </service>
 
         <!-- ২. অ্যাক্সেসিবিলিটি সার্ভিস (টেলিগ্রাম সার্চ ও নোংরা চ্যানেল তাৎক্ষণিক ব্লকার) -->

@@ -1,5 +1,6 @@
 # Shuddho PC Guard Native PowerShell Engine
 param (
+    [ValidateSet("Install", "Uninstall", "Monitor")]
     [string]$Mode = "Install"
 )
 
@@ -98,11 +99,9 @@ function Restore-ShuddhoProtection {
     Write-Host "✅ সিস্টেম স্বাভাবিক অবস্থায় ফিরে এসেছে।" -ForegroundColor Green
 }
 
-if ($Mode -eq "Install" -or $Mode -eq "-Install") {
-    Install-ShuddhoProtection
-} elseif ($Mode -eq "Uninstall" -or $Mode -eq "-Uninstall") {
-    Restore-ShuddhoProtection
-} elseif ($Mode -eq "Monitor" -or $Mode -eq "-Monitor") {
-    # সাইলেন্ট মনিটরিং
-    Install-ShuddhoProtection
+switch ($Mode) {
+    "Install"   { Install-ShuddhoProtection }
+    "Monitor"   { Install-ShuddhoProtection }
+    "Uninstall" { Restore-ShuddhoProtection }
+    default     { Write-Warning "অজানা মোড: $Mode" }
 }

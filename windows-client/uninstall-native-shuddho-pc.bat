@@ -1,16 +1,10 @@
 @echo off
 chcp 65001 > nul
-title শুদ্ধ গার্ড — উইন্ডোজ আনইনস্টলার
+title শুদ্ধ গার্ড — আনইনস্টলার
 
-echo =================================================================
-echo   🛡️ শুদ্ধ গার্ড: উইন্ডোজ আনইনস্টল যাচাইকরণ
-echo =================================================================
-echo.
-
-:: অ্যাডমিন প্রিভিলেজ যাচাই
 net session >nul 2>&1
 if %errorLevel% neq 0 (
-    powershell -Command "Start-Process cmd -ArgumentList '/c \"\"%~dpnx0\"\"' -Verb RunAs"
+    powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
     exit /b
 )
 
@@ -23,16 +17,16 @@ if not "%PIN%"=="1234" (
     exit /b 1
 )
 
-echo.
-echo পিন সঠিক। সিস্টেম রিস্টোর করা হচ্ছে...
-set SCRIPT_DIR=%~dp0
-powershell -ExecutionPolicy Bypass -File "%SCRIPT_DIR%shuddho-pc-engine.ps1" -Uninstall
+set "SCRIPT_DIR=%~dp0"
+set "ENGINE=%SCRIPT_DIR%shuddho-pc-engine.ps1"
 
-schtasks /delete /tn "ShuddhoGuardProtection" /f >nul 2>&1
+echo শুদ্ধ গার্ড সুরক্ষা সরিয়ে ফেলা হচ্ছে...
+
+schtasks /delete /f /tn "ShuddhoGuardProtection" >nul 2>&1
+
+powershell -NoProfile -ExecutionPolicy Bypass -File "%ENGINE%" -Mode Uninstall
 
 echo.
-echo =================================================================
-echo  ✅ শুদ্ধ গার্ড সার্ভিস সফলভাবে নিষ্ক্রিয় করা হয়েছে।
-echo =================================================================
-echo.
+echo ✅ শুদ্ধ গার্ড সফলভাবে আনইনস্টল হয়েছে।
+echo    (hosts ফাইল ব্যাকআপ থেকে রিস্টোর হয়েছে, DNS রিসেট হয়েছে, টাস্ক ডিলিট হয়েছে)
 pause
