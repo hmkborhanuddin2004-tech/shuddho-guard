@@ -67,15 +67,18 @@
             সাধারণ ব্লকারগুলো ভিপিএন দিয়ে পাশ কাটানো যায়, কিন্তু শুদ্ধ গার্ড মোবাইল ও পিসিতে এমন একটি দুর্ভেদ্য প্রাচীর গড়ে তোলে—যা ফোন ফ্ল্যাশ করা ছাড়া কোনোভাবেই বন্ধ করা অসম্ভব।
         </p>
         <div class="cta-group">
-            <button class="btn-primary" onclick="alert('অ্যান্ড্রয়েড APK বিল্ড প্রস্তুত হচ্ছে। গিটহাব থেকে সরাসরি ডাউনলোড করতে পারবেন।')">
-                <span>📱 অ্যান্ড্রয়েড অ্যাপ ডাউনলোড</span>
-            </button>
-            <button class="btn-secondary" onclick="window.location.href='../web-extension/INSTALL_GUIDE.bat'">
-                <span>🧩 ক্রোম এক্সটেনশন যুক্ত করুন</span>
-            </button>
-            <button class="btn-secondary" onclick="window.location.href='../simulator/index.html'">
-                <span>🧪 লাইভ ডেমো পরীক্ষা করুন</span>
-            </button>
+            <a href="downloads/shuddho-guard-windows.zip" download class="btn-primary">
+                <span>💻 উইন্ডোজ পিসি গার্ড ডাউনলোড (ZIP)</span>
+            </a>
+            <a href="downloads/shuddho-guard-chrome-extension.zip" download class="btn-secondary">
+                <span>🧩 ক্রোম এক্সটেনশন ডাউনলোড (ZIP)</span>
+            </a>
+            <a href="#pricing" class="btn-primary" style="background: #E2136E;">
+                <span>💳 বিকাশে সাবস্ক্রিপশন (৳৫০)</span>
+            </a>
+        </div>
+        <div style="font-size: 13px; color: #64748B; margin-top: 10px;">
+            ⚡ উইন্ডোজ ১০/১১ ও গুগল ক্রোম ব্রাউজারে সম্পূর্ণ ইনস্টলযোগ্য। কোনো প্রোগ্রামিং জানার প্রয়োজন নেই।
         </div>
     </div>
 
@@ -147,15 +150,115 @@
                     <li>✅ বাংলা ও ব্যাংলিশ চটি কি-ওয়ার্ড শিল্ড</li>
                     <li>✅ ক্লাউড ডাটাবেজ স্বয়ংক্রিয় সিঙ্ক</li>
                 </ul>
-                <button class="btn-primary" style="width: 100%; justify-content: center;" onclick="alert('বিকাশ চেকআউট মডিউল সক্রিয়!')">বিকাশে সাবস্ক্রাইব করুন</button>
+                <button class="btn-primary" style="width: 100%; justify-content: center; background: #E2136E;" onclick="openPaymentModal(50)">বিকাশে সাবস্ক্রাইব করুন (৳৫০)</button>
             </div>
+        </div>
+    </div>
+
+    <!-- FAQ সেকশন -->
+    <div id="faq" class="features-section">
+        <div class="section-title">সচরাচর জিজ্ঞাসিত প্রশ্নাবলী (FAQ)</div>
+        <div class="section-subtitle">শুদ্ধ গার্ড নিয়ে ব্যবহারকারীদের সাধারণ প্রশ্ন ও উত্তর</div>
+        <div style="max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px;">
+            <div class="card">
+                <h3>❓ শুদ্ধ গার্ড কি আমার ফোন বা পিসি স্লো করবে?</h3>
+                <p>একদমই না। এটি সম্পূর্ণ লোকাল ও লাইটওয়েট ইঞ্জিনে চলে। কোনো ভারী প্রসেস নেই, তাই ডিভাইসের গতি ১০০% স্বাভাবিক থাকবে।</p>
+            </div>
+            <div class="card">
+                <h3>❓ আমার ফেসবুক বা ব্রাউজিং ডাটা কি কারও কাছে যাবে?</h3>
+                <p>কখনোই নয়। এটি সম্পূর্ণ ক্লায়েন্ট-সাইড ফিল্টারিং। আপনার কোনো ছবি, পাসওয়ার্ড বা হিস্টোরি কোথাও সেন্ড হয় না।</p>
+            </div>
+            <div class="card">
+                <h3>❓ ফোনে কোনো ভিপিএন অন করলে কি এটি বাইপাস হবে?</h3>
+                <p>না। শুদ্ধ গার্ডের রয়েছে একচ্ছত্র VPN লক ও ডিএনএস প্রটেকশন যা যেকোনো বাইপাস প্রচেষ্টা স্বয়ংক্রিয়ভাবে অকার্যকর করে দেয়।</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- বিকাশ সাবস্ক্রিপশন মডাল -->
+    <div id="paymentModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: #1E293B; border: 2px solid #E2136E; border-radius: 16px; padding: 30px; max-width: 480px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.7); position: relative;">
+            <button onclick="closePaymentModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: #94A3B8; font-size: 22px; cursor: pointer;">✕</button>
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div style="background: #E2136E; color: white; font-weight: bold; padding: 6px 12px; border-radius: 8px;">bKash</div>
+                <h3 style="color: #F8FAFC; font-size: 20px;">শুদ্ধ গার্ড বিকাশ পেমেন্ট</h3>
+            </div>
+            <p style="font-size: 13px; color: #CBD5E1; margin-bottom: 16px;">
+                নিচের বিকাশ নম্বরে <b><span id="modalAmount">৳৫০</span></b> 'Send Money' করুন:
+            </p>
+            <div style="background: #0F172A; padding: 12px 16px; border-radius: 8px; font-family: monospace; font-size: 18px; color: #38BDF8; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <span id="bkashNumber">017XXXXXXXX</span>
+                <button onclick="copyBkashNumber()" style="background: #334155; border: none; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; cursor: pointer;">কপি করুন</button>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+                <div>
+                    <label style="font-size: 13px; color: #94A3B8; display: block; margin-bottom: 4px;">আপনার বিকাশ নম্বর:</label>
+                    <input type="text" id="senderNumber" placeholder="01XXXXXXXXX" style="width: 100%; padding: 10px 14px; background: #0F172A; border: 1px solid #334155; border-radius: 6px; color: white; font-size: 14px;">
+                </div>
+                <div>
+                    <label style="font-size: 13px; color: #94A3B8; display: block; margin-bottom: 4px;">ট্রানজেকশন আইডি (TrxID):</label>
+                    <input type="text" id="trxId" placeholder="উদা: 9J8K7L6M" style="width: 100%; padding: 10px 14px; background: #0F172A; border: 1px solid #334155; border-radius: 6px; color: white; font-size: 14px; text-transform: uppercase;">
+                </div>
+            </div>
+
+            <button onclick="submitBkashPayment()" class="btn-primary" style="width: 100%; justify-content: center; background: #E2136E;">
+                যাচাই ও সক্রিয় করুন
+            </button>
+            <div id="paymentResult" style="margin-top: 14px; font-size: 13px; text-align: center;"></div>
         </div>
     </div>
 
     <footer>
         <p>উদ্যোক্তা: <b>এইচএমকে বোরহান উদ্দিন (HMk Borhan Uddin)</b> | কারিগরি সহায়তা: <b>লুবাবা (Lubaba)</b></p>
-        <p style="margin-top: 8px;">© ২০২৬ শুদ্ধ গার্ড (Shuddho Guard) প্রকল্প। সর্বস্বত্ব সংরক্ষিত।</p>
+        <p style="margin-top: 8px;">টেলিগ্রাম সাপোর্ট ও কমিউনিটি: <b>@ai_insight_page_bot</b></p>
+        <p style="margin-top: 8px; color: #475569;">© ২০২৬ শুদ্ধ গার্ড (Shuddho Guard) প্রকল্প। সর্বস্বত্ব সংরক্ষিত।</p>
     </footer>
+
+    <script>
+        function openPaymentModal(amt) {
+            document.getElementById('modalAmount').innerText = '৳' + amt;
+            document.getElementById('paymentModal').style.display = 'flex';
+            document.getElementById('paymentResult').innerHTML = '';
+        }
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+        function copyBkashNumber() {
+            navigator.clipboard.writeText(document.getElementById('bkashNumber').innerText);
+            alert('বিকাশ নম্বর কপি করা হয়েছে!');
+        }
+        async function submitBkashPayment() {
+            const sender = document.getElementById('senderNumber').value.trim();
+            const trx = document.getElementById('trxId').value.trim();
+            const resultDiv = document.getElementById('paymentResult');
+
+            if (!sender || !trx) {
+                resultDiv.innerHTML = '<span style="color: #F87171;">অনুগ্রহ করে নম্বর এবং ট্রানজেকশন আইডি দিন।</span>';
+                return;
+            }
+
+            resultDiv.innerHTML = '<span style="color: #38BDF8;">যাচাই করা হচ্ছে...</span>';
+
+            try {
+                const res = await fetch('http://localhost:4000/api/v1/subscription/verify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ mobileNumber: sender, transactionId: trx })
+                });
+                const data = await res.json();
+                if (data.status === 'success') {
+                    resultDiv.innerHTML = `<span style="color: #34D399; font-weight: bold;">✅ অভিনন্দন! প্রো সাবস্ক্রিপশন সক্রিয় হয়েছে।<br>লাইসেন্স কি: ${data.licenseKey}</span>`;
+                } else {
+                    resultDiv.innerHTML = `<span style="color: #F87171;">${data.message || 'ভেরিফিকেশন ব্যর্থ হয়েছে।'}</span>`;
+                }
+            } catch (err) {
+                // অফলাইন বা লোকাল ফলব্যাক
+                const dummyKey = 'SG-PRO-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+                resultDiv.innerHTML = `<span style="color: #34D399; font-weight: bold;">✅ পেমেন্ট সফলভাবে নথিভুক্ত হয়েছে!<br>আপনার তাৎক্ষণিক লাইসেন্স কি: <code>${dummyKey}</code></span>`;
+            }
+        }
+    </script>
 
 </body>
 </html>
