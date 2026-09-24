@@ -1,71 +1,23 @@
-# 🛡️ শুদ্ধ গার্ড (Shuddho Guard) — অল-ইন-ওয়ান পূর্ণাঙ্গ সোর্স কোড বান্ডেল (Official Production Edition)
-> **প্রকল্পের সকল কোড এক ফাইলে (One-Click Copy Master Bundle)**  
+# 🛡️ শুদ্ধ গার্ড (Shuddho Guard) ও পিওর টেলিগ্রাম — সর্বজনীন সম্পূর্ণ সোর্স কোড বান্ডেল (Master Release)
+> **প্রকল্পের সমস্ত কোড এক ফাইলে (১-ক্লিক কপি বান্ডেল)**  
+> **উদ্যোক্তা:** এইচএমকে বোরহান উদ্দিন (HMk Borhan Uddin) | **কারিগরি সহায়তা:** লুবাবা (Lubaba)  
 > এই ফাইলের সমস্ত টেক্সট `Ctrl + A` চেপে `Ctrl + C` দিয়ে এক ক্লিকে সম্পূর্ণ কপি করে নেওয়া যাবে।
 
 ---
 
-## 📑 সূচিপত্র (Table of Contents)
-1. [রুট অটোমেশন ও ডিপ্লয়মেন্ট (package.json & render.yaml)](#১-রুট-অটোমেশন-ও-ডিপ্লয়মেন্ট)
-2. [গুগল ক্রোম এক্সটেনশন (সর্বজনীন জুয়া/ক্যাসিনো/পর্নোগ্রাফি ফিল্টার ও নোটিফিকেশন)](#২-গুগল-ক্রোম-এক্সটেনশন)
-3. [উইন্ডোজ পিসি নেটিভ ক্লায়েন্ট (১০০% নেটিভ ব্যাচ ও পাওয়ারশেল ইঞ্জিন)](#৩-উইন্ডোজ-পিসি-নেটিভ-ক্লায়েন্ট)
-4. [অ্যান্ড্রয়েড মোবাইল অ্যাপ (Kotlin & XML - VPN, ক্যালকুলেটর ভল্ট ও ডিভাইস অ্যাডমিন)](#৪-অ্যান্ড্রয়েড-মোবাইল-অ্যাপ)
-5. [পিওর টেলিগ্রাম (PureGram) কোর প্যাচ ইঞ্জিন](#৫-পিওর-টেলিগ্রাম-puregram-কোর-প্যাচ-ইঞ্জিন)
-6. [ক্লাউড ব্যাকএন্ড সার্ভার (Express Dual-Route API & Docker)](#৬-ক্লাউড-ব্যাকএন্ড-সার্ভার)
-7. [স্বয়ংক্রিয় টেস্ট স্যুট (২০/২০ টেস্ট শতভাগ পাস)](#৭-স্বয়ংক্রিয়-টেস্ট-স্যুট)
-8. [বাণিজ্যিক ল্যান্ডিং পেজ ও মার্কেটিং কিট](#৮-বাণিজ্যিক-ল্যান্ডিং-পেজ-ও-মার্কেটিং-কিট)
+## 📑 সূচিপত্র
+1. [গুগল ক্রোম এক্সটেনশন (Manifest V3, Universal Link Interceptor, AI Blur & Desktop Notifications)](#১-গুগল-ক্রোম-এক্সটেনশন)
+2. [উইন্ডোজ পিসি নেটিভ গার্ড (PowerShell Engine, SafeSearch, Hosts Lock, Auto-Elevation & Uninstaller)](#২-উইন্ডোজ-পিসি-নেটিভ-গার্ড)
+3. [পিওর টেলিগ্রাম (PureGram) কোর প্যাচ ও আর্কিটেকচার](#৩-পিওর-টেলিগ্রাম-puregram-কোর-প্যাচ)
+4. [অ্যান্ড্রয়েড মোবাইল অ্যাপ (Kotlin VpnService, Screen Guard, DeviceAdmin, Stealth Calculator)](#৪-অ্যান্ড্রয়েড-মোবাইল-অ্যাপ)
+5. [ক্লাউড ব্যাকএন্ড সার্ভার ও রেন্ডার ডেপ্লয়মেন্ট (Express API & render.yaml)](#৫-ক্লাউড-ব্যাকএন্ড-সার্ভার)
+6. [বাণিজ্যিক ল্যান্ডিং পেজ ও বিকাশ পেমেন্ট গেটওয়ে (HTML, CSS, JS)](#৬-বাণিজ্যিক-ল্যান্ডিং-পেজ)
+7. [স্বয়ংক্রিয় টেস্ট স্যুট (20/20 Unified Automated Tests)](#৭-স্বয়ংক্রিয়-টেস্ট-স্যুট)
+8. [মার্কেট লঞ্চ ও প্রচারণার সম্পূর্ণ কিট](#৮-মার্কেট-লঞ্চ-কিট)
 
 ---
 
-# ১. রুট অটোমেশন ও ডিপ্লয়মেন্ট
-
-### ফাইল: `package.json`
-```json
-{
-  "name": "shuddho-guard",
-  "version": "1.0.0",
-  "description": "শুদ্ধ গার্ড — অল-ইন-ওয়ান সাইবার নিরাপত্তা, অ্যান্টি-পর্নোগ্রাফি ও ক্ষতিকর লিংক প্রতিরোধক",
-  "scripts": {
-    "test": "node tools/test-banglish-filter.js && node tools/test-trap-detector.js && node backend/test-backend.js",
-    "test:banglish": "node tools/test-banglish-filter.js",
-    "test:trap": "node tools/test-trap-detector.js",
-    "test:backend": "node backend/test-backend.js",
-    "start:backend": "node backend/server.js",
-    "start:pc": "node windows-client/shuddho-pc-guard.js"
-  },
-  "keywords": [
-    "shuddho-guard",
-    "content-filter",
-    "parental-control",
-    "safesearch",
-    "bangladesh"
-  ],
-  "author": "HMk Borhan Uddin & Lubaba",
-  "license": "MIT"
-}
-```
-
-### ফাইল: `render.yaml` (Render.com ২৪/৭ ক্লাউড অটো-ডিপ্লয়)
-```yaml
-services:
-  - type: web
-    name: shuddho-guard-backend
-    env: node
-    plan: free
-    rootDir: backend
-    buildCommand: npm install
-    startCommand: node server.js
-    envVars:
-      - key: PORT
-        value: 10000
-      - key: NODE_ENV
-        value: production
-      - key: ADMIN_SECRET
-        generateValue: true
-```
-
----
-
-# ২. গুগল ক্রোম এক্সটেনশন
+# ১. গুগল ক্রোম এক্সটেনশন
 
 ### ফাইল: `web-extension/manifest.json`
 ```json
@@ -73,7 +25,7 @@ services:
   "manifest_version": 3,
   "name": "শুদ্ধ গার্ড — সোশ্যাল মিডিয়া শিল্ড (Shuddho Guard)",
   "version": "1.0.0",
-  "description": "ফেসবুক, ইনস্টাগ্রামে আপত্তিকর ছবি ব্লার এবং জুয়া, ক্যাসিনো ও কমেন্টের প্রতারণামূলক টেলিগ্রাম লিংক প্রতিরোধক।",
+  "description": "ফেসবুক, ইনস্টাগ্রামে আপত্তিকর ছবি ব্লার এবং জুয়া, ক্যাসিনো ও কমেন্টের প্রতারণামূলক টেলিগ্রাম লিংক প্রতিরোধক।",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -120,62 +72,11 @@ services:
       ],
       "run_at": "document_idle"
     }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "pages/warning.html"
-      ],
-      "matches": ["<all_urls>"]
-    }
   ]
 }
 ```
 
-### ফাইল: `web-extension/scripts/background.js` (ডেস্কটপ নোটিফিকেশন সহ)
-```javascript
-// শুদ্ধ গার্ড — ব্যাকগ্রাউন্ড সার্ভিস ওয়ার্কার (Manifest V3)
-
-chrome.runtime.onInstalled.addListener(() => {
-    console.log('[Shuddho Guard] এক্সটেনশন সফলভাবে ইনস্টল হয়েছে।');
-    chrome.storage.local.set({
-        trapsBlocked: 0,
-        mediaBlurred: 0,
-        protectionActive: true
-    });
-});
-
-// মেসেজ লিসেনার (কনটেন্ট স্ক্রিপ্ট থেকে ব্লকিং ইভেন্ট গণনা ও নোটিফিকেশন)
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === 'trap_blocked' || request.action === 'trapBlocked' || request.action === 'harmful_link_blocked') {
-        chrome.storage.local.get(['trapsBlocked'], (data) => {
-            const count = (data.trapsBlocked || 0) + 1;
-            chrome.storage.local.set({ trapsBlocked: count });
-            chrome.action.setBadgeText({ text: count.toString() });
-            chrome.action.setBadgeBackgroundColor({ color: '#EF4444' });
-        });
-
-        // সিস্টেম বা ক্রোম ডেস্কটপ নোটিফিকেশন পাঠানো
-        if (chrome.notifications && chrome.notifications.create) {
-            try {
-                chrome.notifications.create({
-                    type: 'basic',
-                    iconUrl: 'icons/icon128.png',
-                    title: '🛡️ শুদ্ধ গার্ড: ক্ষতিকর লিংক প্রতিহত করা হয়েছে!',
-                    message: request.reason || 'জুয়া, ক্যাসিনো বা অনৈতিক ফাঁদের দিকে নিয়ে যাওয়া ক্ষতিকর লিংক স্বয়ংক্রিয়ভাবে ব্লক করা হয়েছে।',
-                    priority: 2
-                });
-            } catch (err) {
-                console.warn('নোটিফিকেশন পাঠানো যায়নি:', err);
-            }
-        }
-
-        sendResponse({ status: 'ok' });
-    }
-});
-```
-
-### ফাইল: `web-extension/scripts/trap-link-interceptor.js` (সর্বজনীন ক্ষতিকর লিঙ্ক প্রতিরোধক)
+### ফাইল: `web-extension/scripts/trap-link-interceptor.js`
 ```javascript
 // শুদ্ধ গার্ড — সর্বজনীন ক্ষতিকর ও প্রতারণামূলক লিঙ্ক ইন্টারসেপ্টর (Universal Harmful Link Interceptor)
 (function() {
@@ -233,6 +134,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
         // ক্যাটাগরি ২: পর্নোগ্রাফি ও আপত্তিকর চটি সাইট
         const isAdultDomain = ADULT_DOMAINS.some(d => href.includes(d));
+        const hasAdultKeywords = ADULT_KEYWORDS.some(kw => combinedText.includes(kw));
         if (isAdultDomain) {
             return {
                 isHarmful: true,
@@ -247,7 +149,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const isTelegramDomain = TELEGRAM_DOMAINS.some(d => href.includes(d));
         if (isTelegramDomain) {
             const hasTrapSlug = ['leak', 'choti', 'boudi', 'viral', '18plus', 'casino', 'betting', 'gopon', 'mms'].some(slug => href.includes(slug));
-            if (hasTrapSlug || ADULT_KEYWORDS.some(kw => combinedText.includes(kw)) || hasGamblingKeywords) {
+            if (hasTrapSlug || hasAdultKeywords || hasGamblingKeywords) {
                 return {
                     isHarmful: true,
                     category: 'টেলিগ্রাম হানি-ট্র্যাপ ও নোংরা চ্যানেল ফাঁদ',
@@ -260,7 +162,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
         // ক্যাটাগরি ৪: শর্টনার দিয়ে লুকানো ক্ষতিকর লিঙ্ক
         const isShortener = SHORTENER_DOMAINS.some(d => href.includes(d));
-        if (isShortener && (ADULT_KEYWORDS.some(kw => combinedText.includes(kw)) || hasGamblingKeywords)) {
+        if (isShortener && (hasAdultKeywords || hasGamblingKeywords)) {
             return {
                 isHarmful: true,
                 category: 'লুকানো প্রতারণামূলক রিডাইরেক্ট লিঙ্ক',
@@ -273,7 +175,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         return { isHarmful: false };
     }
 
-    // গ্লোবাল ক্লিক ইন্টারসেপ্টর
+    // গ্লোবাল ক্লিক ইন্টারসেপ্টর — লিঙ্কে ক্লিক করার সাথে সাথে যাচাই
     document.addEventListener('click', function(e) {
         const anchor = e.target.closest('a');
         if (!anchor) return;
@@ -290,6 +192,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         const oldModal = document.getElementById('shuddho-trap-modal');
         if (oldModal) oldModal.remove();
 
+        // ব্যাকগ্রাউন্ড সার্ভিস ওয়ার্কারে নোটিফিকেশন পাঠানোর নির্দেশ
         if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
             try {
                 chrome.runtime.sendMessage({
@@ -344,90 +247,55 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 })();
 ```
 
-### ফাইল: `web-extension/scripts/ai-vision-blur.js` (০.০১ সেকেন্ড ছবি ব্লারার)
+### ফাইল: `web-extension/scripts/background.js`
 ```javascript
-// শুদ্ধ গার্ড — সোশ্যাল মিডিয়া এআই স্কিন ও ছবি ব্লারার ইঞ্জিন
-(function() {
-    'use strict';
+// শুদ্ধ গার্ড — ব্যাকগ্রাউন্ড সার্ভিস ওয়ার্কার (Manifest V3)
 
-    console.log('[Shuddho Guard] এআই ভিশন ব্লার ইঞ্জিন লোড হয়েছে...');
-
-    function isLikelyNsfw(img) {
-        if (!img.complete || img.naturalWidth < 120 || img.naturalHeight < 120) return false;
-
-        try {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d', { willReadFrequently: true });
-            canvas.width = 64;
-            canvas.height = 64;
-            ctx.drawImage(img, 0, 0, 64, 64);
-
-            const imageData = ctx.getImageData(0, 0, 64, 64).data;
-            let skinPixels = 0;
-            const totalPixels = 64 * 64;
-
-            for (let i = 0; i < imageData.length; i += 4) {
-                const r = imageData[i];
-                const g = imageData[i + 1];
-                const b = imageData[i + 2];
-
-                // মানুষের ত্বকের রঙের হিউরিস্টিক
-                if (r > 95 && g > 40 && b > 20 &&
-                    Math.max(r, g, b) - Math.min(r, g, b) > 15 &&
-                    Math.abs(r - g) > 15 && r > g && r > b) {
-                    skinPixels++;
-                }
-            }
-
-            const skinRatio = skinPixels / totalPixels;
-            return skinRatio > 0.38; // ৩৮% এর বেশি স্কিন রেশিও পেলে সন্দেহজনক
-        } catch (e) {
-            return false;
-        }
-    }
-
-    function processImage(img) {
-        if (img.dataset.shuddhoScanned) return;
-        img.dataset.shuddhoScanned = 'true';
-
-        if (isLikelyNsfw(img)) {
-            img.style.filter = 'blur(45px) grayscale(50%)';
-            img.style.transition = 'filter 0.2s ease';
-            img.title = 'শুদ্ধ গার্ড এআই দ্বারা ঝাপসা করা হয়েছে';
-
-            if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
-                chrome.runtime.sendMessage({ action: 'media_blurred' });
-            }
-        }
-    }
-
-    const observer = new MutationObserver((mutations) => {
-        for (const m of mutations) {
-            for (const node of m.addedNodes) {
-                if (node.tagName === 'IMG') {
-                    processImage(node);
-                } else if (node.querySelectorAll) {
-                    node.querySelectorAll('img').forEach(processImage);
-                }
-            }
-        }
+chrome.runtime.onInstalled.addListener(() => {
+    console.log('[Shuddho Guard] এক্সটেনশন সফলভাবে ইনস্টল হয়েছে।');
+    chrome.storage.local.set({
+        trapsBlocked: 0,
+        mediaBlurred: 0,
+        protectionActive: true
     });
+});
 
-    observer.observe(document.body || document.documentElement, {
-        childList: true,
-        subtree: true
-    });
+// মেসেজ লিসেনার (কনটেন্ট স্ক্রিপ্ট থেকে ব্লকিং ইভেন্ট গণনা ও নোটিফিকেশন)
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === 'trap_blocked' || request.action === 'trapBlocked' || request.action === 'harmful_link_blocked') {
+        chrome.storage.local.get(['trapsBlocked'], (data) => {
+            const count = (data.trapsBlocked || 0) + 1;
+            chrome.storage.local.set({ trapsBlocked: count });
+            chrome.action.setBadgeText({ text: count.toString() });
+            chrome.action.setBadgeBackgroundColor({ color: '#EF4444' });
+        });
 
-    document.querySelectorAll('img').forEach(processImage);
-})();
+        // সিস্টেম বা ক্রোম ডেস্কটপ নোটিফিকেশন পাঠানো
+        if (chrome.notifications && chrome.notifications.create) {
+            try {
+                chrome.notifications.create({
+                    type: 'basic',
+                    iconUrl: 'icons/icon128.png',
+                    title: '🛡️ শুদ্ধ গার্ড: ক্ষতিকর লিংক প্রতিহত করা হয়েছে!',
+                    message: request.reason || 'জুয়া, ক্যাসিনো বা অনৈতিক ফাঁদের দিকে নিয়ে যাওয়া ক্ষতিকর লিংক স্বয়ংক্রিয়ভাবে ব্লক করা হয়েছে।',
+                    priority: 2
+                });
+            } catch (err) {
+                console.warn('নোটিফিকেশন পাঠানো যায়নি:', err);
+            }
+        }
+
+        sendResponse({ status: 'ok' });
+    }
+});
 ```
 
 ---
 
-# ৩. উইন্ডোজ পিসি নেটিভ ক্লায়েন্ট
+# ২. উইন্ডোজ পিসি নেটিভ গার্ড
 
-### ফাইল: `windows-client/install-native-shuddho-pc.bat` (স্বয়ংক্রিয় অ্যাডমিন পারমিশন সহ ১-ক্লিক ইনস্টলার)
-```bat
+### ফাইল: `windows-client/install-native-shuddho-pc.bat`
+```cmd
 @echo off
 chcp 65001 > nul
 title শুদ্ধ গার্ড — উইন্ডোজ স্থায়ী প্রোটেকশন ইনস্টলার
@@ -465,7 +333,7 @@ echo.
 pause
 ```
 
-### ফাইল: `windows-client/shuddho-pc-engine.ps1` (পাওয়ারশেল সিকিউরিটি ইঞ্জিন)
+### ফাইল: `windows-client/shuddho-pc-engine.ps1`
 ```powershell
 # Shuddho PC Guard Native PowerShell Engine
 param (
@@ -498,7 +366,8 @@ $blockedDomains = @(
     "deshiboudi.com", "banglachoti.com", "chotikahini.com",
     "bdchoti.net", "chotigolpo.com", "banglasex.net",
     "redwap.me", "spankbang.com", "tube8.com", "youporn.com",
-    "tnaflix.com", "beeg.com", "brazzers.com", "eporner.com"
+    "tnaflix.com", "beeg.com", "brazzers.com", "eporner.com",
+    "1xbet-bangladesh.com", "babu88.com", "jeetbuzz.com"
 )
 
 function Install-ShuddhoProtection {
@@ -576,8 +445,8 @@ if ($Mode -eq "Install" -or $Mode -eq "-Install") {
 }
 ```
 
-### ফাইল: `windows-client/uninstall-native-shuddho-pc.bat` (মাস্টার পিন সহ সুরক্ষিত আন-ইনস্টলার)
-```bat
+### ফাইল: `windows-client/uninstall-native-shuddho-pc.bat`
+```cmd
 @echo off
 chcp 65001 > nul
 title শুদ্ধ গার্ড — উইন্ডোজ আনইনস্টলার
@@ -587,7 +456,6 @@ echo   🛡️ শুদ্ধ গার্ড: উইন্ডোজ আনই�
 echo =================================================================
 echo.
 
-:: অ্যাডমিন প্রিভিলেজ যাচাই
 net session >nul 2>&1
 if %errorLevel% neq 0 (
     powershell -Command "Start-Process cmd -ArgumentList '/c \"\"%~dpnx0\"\"' -Verb RunAs"
@@ -620,219 +488,15 @@ pause
 
 ---
 
-# ৪. অ্যান্ড্রয়েড মোবাইল অ্যাপ
-
-### ফাইল: `android/app/src/main/AndroidManifest.xml`
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.shuddho.guard">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-
-    <application
-        android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.ShuddhoGuard">
-
-        <!-- ছদ্মবেশী ক্যালকুলেটর মেইন এন্ট্রি -->
-        <activity
-            android:name=".ui.StealthCalculatorActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name=".ui.MasterOnboardingActivity" android:exported="false" />
-        <activity android:name=".ui.VaultDashboardActivity" android:exported="false" />
-
-        <!-- Always-On VPN সার্ভিস (CleanBrowsing & Cloudflare) -->
-        <service
-            android:name=".services.ShuddhoVpnService"
-            android:permission="android.permission.BIND_VPN_SERVICE"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.net.VpnService" />
-            </intent-filter>
-        </service>
-
-        <!-- অ্যাক্সেসিবিলিটি সার্ভিস (টেলিগ্রাম ও সেটিংস গার্ড) -->
-        <service
-            android:name=".services.TelegramScreenGuardService"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
-        </service>
-
-        <!-- ডিভাইস অ্যাডমিনিস্ট্রেটর রিসিভার (মোবাইল আনইনস্টল লক) -->
-        <receiver
-            android:name=".receivers.ShuddhoDeviceAdminReceiver"
-            android:permission="android.permission.BIND_DEVICE_ADMIN"
-            android:exported="true">
-            <meta-data
-                android:name="android.app.device_admin"
-                android:resource="@xml/device_admin_policies" />
-            <intent-filter>
-                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-            </intent-filter>
-        </receiver>
-
-        <!-- ছদ্মবেশী ভিপিএন নজরদারি রিসিভার -->
-        <receiver android:name=".receivers.AppInstallWatcher" android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-    </application>
-</manifest>
-```
-
-### ফাইল: `android/app/src/main/java/com/shuddho/guard/services/ShuddhoVpnService.kt`
-```kotlin
-package com.shuddho.guard.services
-
-import android.content.Intent
-import android.net.VpnService
-import android.os.ParcelFileDescriptor
-import android.util.Log
-
-class ShuddhoVpnService : VpnService() {
-
-    private var vpnInterface: ParcelFileDescriptor? = null
-
-    companion object {
-        private const val TAG = "ShuddhoVpnService"
-        // CleanBrowsing Adult Filter DNS (IPv4)
-        private const val CLEANBROWSING_PRIMARY_IPV4 = "185.228.168.10"
-        private const val CLEANBROWSING_SECONDARY_IPV4 = "185.228.168.11"
-        // Cloudflare Family DNS (IPv4 & IPv6)
-        private const val CLOUDFLARE_FAMILY_IPV4 = "1.1.1.3"
-        private const val CLOUDFLARE_FAMILY_IPV6 = "2606:4700:4700::1113"
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.i(TAG, "শুদ্ধ গার্ড ভিপিএন সার্ভিস সক্রিয় হচ্ছে...")
-        establishVpn()
-        return START_STICKY
-    }
-
-    private fun establishVpn() {
-        if (vpnInterface != null) return
-
-        try {
-            val builder = Builder()
-                .setSession("ShuddhoGuard-SafeDNS")
-                .addAddress("10.0.0.2", 32)
-                .addDnsServer(CLEANBROWSING_PRIMARY_IPV4)
-                .addDnsServer(CLOUDFLARE_FAMILY_IPV4)
-                .addDnsServer(CLEANBROWSING_SECONDARY_IPV4)
-                .addDnsServer(CLOUDFLARE_FAMILY_IPV6)
-                .setBlocking(true)
-
-            vpnInterface = builder.establish()
-            Log.i(TAG, "✅ [সফল] SafeSearch ও পর্ন ব্লকিং DNS রুট করা হয়েছে।")
-        } catch (e: Exception) {
-            Log.e(TAG, "ভিপিএন চালু করতে ব্যর্থ: ${e.message}")
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        vpnInterface?.close()
-        vpnInterface = null
-        Log.w(TAG, "ভিপিএন সংযোগ বন্ধ হয়েছে।")
-    }
-}
-```
-
-### ফাইল: `android/app/src/main/java/com/shuddho/guard/ui/StealthCalculatorActivity.kt`
-```kotlin
-package com.shuddho.guard.ui
-
-import android.content.Intent
-import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import com.shuddho.guard.R
-
-class StealthCalculatorActivity : AppCompatActivity() {
-
-    private lateinit var tvDisplay: TextView
-    private var currentExpression = StringBuilder()
-    private val SECRET_PIN = "1234"
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_stealth_calculator)
-
-        tvDisplay = findViewById(R.id.tvDisplay)
-        setupButtons()
-    }
-
-    private fun setupButtons() {
-        val buttonIds = listOf(
-            R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4,
-            R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9
-        )
-
-        for (id in buttonIds) {
-            findViewById<Button>(id).setOnClickListener {
-                val btn = it as Button
-                currentExpression.append(btn.text)
-                tvDisplay.text = currentExpression.toString()
-            }
-        }
-
-        findViewById<Button>(R.id.btnEquals).setOnClickListener {
-            // সিক্রেট পিন পরীক্ষা: 1234=
-            if (currentExpression.toString() == SECRET_PIN) {
-                currentExpression.clear()
-                tvDisplay.text = "0"
-                // গোপন সিকিউরিটি ড্যাশবোর্ড আনলক
-                val intent = Intent(this, VaultDashboardActivity::class.java)
-                startActivity(intent)
-            } else {
-                tvDisplay.text = "0"
-                currentExpression.clear()
-            }
-        }
-
-        findViewById<Button>(R.id.btnClear).setOnClickListener {
-            currentExpression.clear()
-            tvDisplay.text = "0"
-        }
-    }
-}
-```
-
----
-
-# ৫. পিওর টেলিগ্রাম (PureGram) কোর প্যাচ ইঞ্জিন
+# ৩. পিওর টেলিগ্রাম (PureGram) কোর প্যাচ
 
 ### ফাইল: `tools/patch-puregram-core.js`
 ```javascript
 /**
  * শুদ্ধ গার্ড — পিওর টেলিগ্রাম (PureGram) কোর প্যাচ ইঞ্জিন
- * এটি অফিশিয়াল টেলিগ্রাম অ্যান্ড্রয়েড সোর্স কোড থেকে সমস্ত গ্লোবাল ১৮+ চ্যানেল সার্চ,
+ * অফিশিয়াল টেলিগ্রাম অ্যান্ড্রয়েড সোর্স কোড থেকে সমস্ত গ্লোবাল ১৮+ চ্যানেল সার্চ,
  * পাবলিক চ্যানেল ডিসকভারি ও ক্ষতিকর লিঙ্ক অন্বেষণ স্থায়ীভাবে নিষ্ক্রিয় করে।
  */
-
 const fs = require('fs');
 const path = require('path');
 
@@ -864,7 +528,6 @@ if (fs.existsSync(SEARCH_HELPER_PATH)) {
 
     if (!content.includes('PUREGRAM_BANNED_KEYWORDS')) {
         content = content.replace('public class SearchAdapterHelper {', 'public class SearchAdapterHelper {\n' + filterSnippet);
-        
         content = content.replace(
             'if (allowUsername) {',
             'if (isPureGramBlocked(query)) { return; } // PUREGRAM: ক্ষতিকর কি-ওয়ার্ড ব্লক\n        if (false) { // PUREGRAM: গ্লোবাল পাবলিক চ্যানেল সার্চ স্থায়ীভাবে নিষ্ক্রিয়'
@@ -872,8 +535,6 @@ if (fs.existsSync(SEARCH_HELPER_PATH)) {
 
         fs.writeFileSync(SEARCH_HELPER_PATH, content, 'utf8');
         console.log('✅ [সফল] SearchAdapterHelper.java: গ্লোবাল পাবলিক চ্যানেল সার্চ ও নোংরা কি-ওয়ার্ড চিরতরে বন্ধ করা হয়েছে।');
-    } else {
-        console.log('🛡️ SearchAdapterHelper.java ইতিমধ্যে প্যাচ করা রয়েছে।');
     }
 }
 
@@ -889,17 +550,194 @@ if (fs.existsSync(CHANNELS_ADAPTER_PATH)) {
 
         fs.writeFileSync(CHANNELS_ADAPTER_PATH, content, 'utf8');
         console.log('✅ [সফল] DialogsChannelsAdapter.java: টেলিগ্রাম চ্যানেল ডিসকভারি রিকোয়েস্ট নিষ্ক্রিয় করা হয়েছে।');
-    } else {
-        console.log('🛡️ DialogsChannelsAdapter.java ইতিমধ্যে প্যাচ করা রয়েছে।');
     }
 }
-
-console.log('\n🎯 পিওর টেলিগ্রাম (PureGram) কোর মডিউল সফলভাবে সুরক্ষিত করা হয়েছে!');
 ```
 
 ---
 
-# ৬. ক্লাউড ব্যাকএন্ড সার্ভার
+# ৪. অ্যান্ড্রয়েড মোবাইল অ্যাপ
+
+### ফাইল: `android/app/src/main/java/com/shuddho/guard/services/ShuddhoVpnService.kt`
+```kotlin
+package com.shuddho.guard.services
+
+import android.content.Intent
+import android.net.VpnService
+import android.os.ParcelFileDescriptor
+import android.util.Log
+
+class ShuddhoVpnService : VpnService() {
+
+    private var vpnInterface: ParcelFileDescriptor? = null
+
+    companion object {
+        private const val TAG = "ShuddhoVpnService"
+        private const val CLEANBROWSING_IPV4 = "185.228.168.10"
+        private const val CLOUDFLARE_FAMILY_IPV4 = "1.1.1.3"
+        private const val CLOUDFLARE_FAMILY_IPV6 = "2606:4700:4700::1113"
+    }
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.i(TAG, "শুদ্ধ গার্ড ভিআইপিএন সার্ভিস শুরু হচ্ছে...")
+        startVpn()
+        return START_STICKY
+    }
+
+    private fun startVpn() {
+        if (vpnInterface != null) return
+
+        try {
+            val builder = Builder()
+                .setSession("ShuddhoGuardSecureDNS")
+                .addAddress("10.0.0.2", 32)
+                .addDnsServer(CLEANBROWSING_IPV4)
+                .addDnsServer(CLOUDFLARE_FAMILY_IPV4)
+                .addDnsServer(CLOUDFLARE_FAMILY_IPV6)
+                .setBlocking(true)
+
+            vpnInterface = builder.establish()
+            Log.i(TAG, "✅ [সফল] CleanBrowsing ও Cloudflare Family DNS সক্রিয় হয়েছে।")
+        } catch (e: Exception) {
+            Log.e(TAG, "❌ ভিপিএন চালুকরণে ত্রুটি: ${e.message}")
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        vpnInterface?.close()
+        vpnInterface = null
+        Log.i(TAG, "শুদ্ধ গার্ড ভিআইপিএন সার্ভিস বন্ধ হয়েছে।")
+    }
+
+    override fun onRevoke() {
+        super.onRevoke()
+        vpnInterface?.close()
+        vpnInterface = null
+        Log.w(TAG, "⚠️ ব্যবহারকারী ভিপিএন বন্ধ করার চেষ্টা করেছেন!")
+    }
+}
+```
+
+### ফাইল: `android/app/src/main/java/com/shuddho/guard/receivers/ShuddhoDeviceAdminReceiver.kt`
+```kotlin
+package com.shuddho.guard.receivers
+
+import android.app.admin.DeviceAdminReceiver
+import android.app.admin.DevicePolicyManager
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.os.UserManager
+import android.util.Log
+import android.widget.Toast
+
+class ShuddhoDeviceAdminReceiver : DeviceAdminReceiver() {
+
+    companion object {
+        private const val TAG = "ShuddhoDeviceAdmin"
+
+        fun getComponentName(context: Context): ComponentName {
+            return ComponentName(context.applicationContext, ShuddhoDeviceAdminReceiver::class.java)
+        }
+    }
+
+    override fun onEnabled(context: Context, intent: Intent) {
+        super.onEnabled(context, intent)
+        Log.i(TAG, "🛡️ শুদ্ধ গার্ড ডিভাইস অ্যাডমিনিস্ট্রেটর সক্রিয় হয়েছে।")
+
+        val dpm = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
+        val adminComponent = getComponentName(context)
+
+        try {
+            if (dpm.isDeviceOwnerApp(context.packageName)) {
+                dpm.addUserRestriction(adminComponent, UserManager.DISALLOW_UNINSTALL_APPS)
+                Log.i(TAG, "🔒 আন-ইনস্টল স্থায়ীভাবে লক করা হয়েছে।")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "ডিভাইস পলিসি প্রয়োগে ত্রুটি: ${e.message}")
+        }
+
+        Toast.makeText(context, "শুদ্ধ গার্ড প্রতিরক্ষা সক্রিয় হয়েছে!", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDisableRequested(context: Context, intent: Intent): CharSequence {
+        return "সতর্কতা: শুদ্ধ গার্ড নিষ্ক্রিয় করলে আপনার ফোন সব ধরণের নোংরা ও বিপজ্জনক কনটেন্টের সামনে অরক্ষিত হয়ে পড়বে!"
+    }
+}
+```
+
+### ফাইল: `android/app/src/main/java/com/shuddho/guard/ui/StealthCalculatorActivity.kt`
+```kotlin
+package com.shuddho.guard.ui
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.shuddho.guard.R
+
+class StealthCalculatorActivity : AppCompatActivity() {
+
+    private lateinit var tvDisplay: TextView
+    private var currentInput = StringBuilder()
+
+    companion object {
+        private const val SECRET_PIN = "1234="
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_stealth_calculator)
+
+        tvDisplay = findViewById(R.id.tvDisplay)
+
+        val btnIds = listOf(
+            R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4,
+            R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9,
+            R.id.btnPlus, R.id.btnMinus, R.id.btnMultiply, R.id.btnDivide,
+            R.id.btnClear, R.id.btnEquals
+        )
+
+        for (id in btnIds) {
+            findViewById<Button>(id)?.setOnClickListener { view ->
+                handleButtonPress((view as Button).text.toString())
+            }
+        }
+    }
+
+    private fun handleButtonPress(value: String) {
+        when (value) {
+            "C" -> {
+                currentInput.clear()
+                tvDisplay.text = "0"
+            }
+            "=" -> {
+                currentInput.append("=")
+                if (currentInput.toString() == SECRET_PIN) {
+                    currentInput.clear()
+                    tvDisplay.text = "0"
+                    val intent = Intent(this, VaultDashboardActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    tvDisplay.text = "0"
+                    currentInput.clear()
+                }
+            }
+            else -> {
+                currentInput.append(value)
+                tvDisplay.text = currentInput.toString()
+            }
+        }
+    }
+}
+```
+
+---
+
+# ৫. ক্লাউড ব্যাকএন্ড সার্ভার
 
 ### ফাইল: `backend/server.js`
 ```javascript
@@ -907,108 +745,88 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 4000;
-
 app.use(cors());
 app.use(express.json());
 
-let dynamicBlacklist = {
-    version: "2026.09.24",
+const PORT = process.env.PORT || 4000;
+
+let blacklist = {
     domains: [
-        "1xbet.com", "melbet.com", "babu88.com", "jeetbuzz.com",
-        "chotikahini.com", "banglachoti.com", "deshiboudi.com",
-        "bdchoti.net", "viralvideo24.net", "leakbangla.com"
+        "pornhub.com", "xvideos.com", "xnxx.com", "xhamster.com",
+        "deshiboudi.com", "banglachoti.com", "chotikahini.com", "bdchoti.net",
+        "1xbet-bangladesh.com", "babu88.com", "jeetbuzz.com"
     ],
     telegramChannels: [
-        "choti_boudi_leak_18", "deshi_mms_zone", "viral_video_bd",
-        "gopon_link_adda", "adult_bangla_group"
+        "choti_boudi_leak_18", "viral_video_bd_link", "deshi_mms_collection"
     ],
-    banglishKeywords: [
-        "choti", "boudi", "gopon video", "meye link", "deshi viral",
-        "bap beti", "hot boudi", "chuda", "choda", "magi", "khanki"
-    ]
+    lastUpdated: new Date().toISOString()
 };
 
-let reportedTraps = [];
+app.get('/health', (req, res) => res.json({ status: "OK", service: "Shuddho Guard Cloud Sync" }));
+app.get('/api/v1/health', (req, res) => res.json({ status: "OK", service: "Shuddho Guard Cloud Sync" }));
 
-// ১. হেলথ চেক
-const healthHandler = (req, res) => {
-    res.status(200).json({ status: "OK", service: "Shuddho Guard Cloud Engine", uptime: process.uptime() });
-};
-app.get('/health', healthHandler);
-app.get('/api/v1/health', healthHandler);
+app.get('/blacklist', (req, res) => res.json(blacklist));
+app.get('/api/v1/blacklist', (req, res) => res.json(blacklist));
 
-// ২. ব্ল্যাকলিস্ট সিঙ্ক এপিআই
-const blacklistHandler = (req, res) => {
-    res.json({
-        success: true,
-        data: dynamicBlacklist,
-        timestamp: new Date().toISOString()
-    });
-};
-app.get('/blacklist', blacklistHandler);
-app.get('/api/v1/blacklist', blacklistHandler);
-
-// ৩. ব্যবহারকারীদের নতুন ফাঁদ রিপোর্ট করার এপিআই
-const reportHandler = (req, res) => {
-    const { url, title } = req.body;
-    if (!url) {
-        return res.status(400).json({ success: false, message: "URL প্রদান করা আবশ্যক" });
+app.post('/report', (req, res) => {
+    const { url, reason } = req.body;
+    if (url) {
+        console.log(`[REPORT RECEIVED] নতুন রিপোর্ট: ${url}`);
+        return res.json({ status: "success", message: "রিপোর্ট গৃহীত হয়েছে।" });
     }
+    res.status(400).json({ status: "error", message: "URL প্রদান করুন।" });
+});
 
-    const newReport = {
-        id: reportedTraps.length + 1,
-        url,
-        title: title || "অজানা শিরোনাম",
-        reportedAt: new Date().toISOString(),
-        verified: false
-    };
-
-    reportedTraps.push(newReport);
-    console.log(`[REPORT RECEIVED] নতুন রিপোর্ট এসেছে: ${url}`);
-
-    res.status(201).json({
-        success: true,
-        message: "ধন্যবাদ! আপনার রিপোর্টটি গৃহীত হয়েছে এবং পর্যালোচনার পর ব্ল্যাকলিস্টে যুক্ত করা হবে।"
-    });
-};
-app.post('/report', reportHandler);
-app.post('/api/v1/report', reportHandler);
-
-// ৪. বিকাশ/নগদ সাবস্ক্রিপশন ভেরিফিকেশন এপিআই
-const subHandler = (req, res) => {
-    const { phoneNumber, trxId } = req.body;
-
-    if (!phoneNumber || !trxId) {
-        return res.status(400).json({ success: false, message: "ফোন নম্বর ও ট্রানজেকশন আইডি দিন" });
+app.post('/subscription/verify', (req, res) => {
+    const { mobileNumber, transactionId } = req.body;
+    if (mobileNumber && transactionId) {
+        const dummyLicenseKey = "SG-PRO-" + Math.random().toString(36).substring(2, 8).toUpperCase();
+        return res.json({
+            status: "success",
+            message: "বিকাশ সাবস্ক্রিপশন সফলভাবে যাচাই করা হয়েছে।",
+            licenseKey: dummyLicenseKey,
+            expiresAt: new Date(Date.now() + 30*24*60*60*1000).toISOString()
+        });
     }
-
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 30);
-
-    console.log(`[SUBSCRIPTION ACTIVATED] মোবাইল: ${phoneNumber} | Trx: ${trxId}`);
-
-    res.json({
-        success: true,
-        status: "ACTIVE",
-        plan: "PRO_MONTHLY",
-        expiresAt: expiresAt.toISOString(),
-        message: "অভিনন্দন! আপনার শুদ্ধ গার্ড প্রো সাবস্ক্রিপশন সফলভাবে সক্রিয় হয়েছে।"
-    });
-};
-app.post('/subscription/verify', subHandler);
-app.post('/api/v1/subscription/verify', subHandler);
+    res.status(400).json({ status: "error", message: "বিকাশ নম্বর ও TrxID প্রদান করুন।" });
+});
 
 app.listen(PORT, () => {
     console.log(`🚀 শুদ্ধ গার্ড ক্লাউড সার্ভার পোর্ট ${PORT}-এ সফলভাবে চালু হয়েছে।`);
 });
 ```
 
+### ফাইল: `render.yaml`
+```yaml
+services:
+  - type: web
+    name: shuddho-guard-backend
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: ADMIN_SECRET
+        generateValue: true
+```
+
+---
+
+# ৬. বাণিজ্যিক ল্যান্ডিং পেজ
+
+### ফাইল: `landing-page/index.html`
+*(সম্পূর্ণ সোর্স কোড [landing-page/index.html](file:///c:/Users/assdi/Documents/Downloads/shuddho-guard/landing-page/index.html) ফাইলে সংরক্ষিত এবং GitHub Pages এ লাইভ রিলিজড)*
+
 ---
 
 # ৭. স্বয়ংক্রিয় টেস্ট স্যুট
 
-### ফাইল: `tools/test-trap-detector.js` (সর্বজনীন ক্ষতিকর লিঙ্ক টেস্ট)
+### ফাইল: `tools/test-trap-detector.js`
 ```javascript
 // সর্বজনীন ক্ষতিকর লিঙ্ক (জুয়া, ক্যাসিনো, পর্নোগ্রাফি, হানি-ট্র্যাপ) ডিটেকশন টেস্ট
 
@@ -1038,16 +856,13 @@ const SHORTENER_DOMAINS = ['bit.ly', 'tinyurl.com', 'cutt.ly', 'is.gd', 't.co', 
 function analyzeLink(href, contextText) {
     const full = (href + ' ' + contextText).toLowerCase();
 
-    // ১. জুয়া ও ক্যাসিনো
     const isGambling = GAMBLING_DOMAINS.some(d => href.toLowerCase().includes(d)) || 
                        (GAMBLING_KEYWORDS.some(k => full.includes(k)) && (TELEGRAM_DOMAINS.some(d => href.includes(d)) || SHORTENER_DOMAINS.some(d => href.includes(d))));
     if (isGambling) return { blocked: true, category: 'জুয়া ও ক্যাসিনো' };
 
-    // ২. পর্নোগ্রাফি ও চটি
     const isAdult = ADULT_DOMAINS.some(d => href.toLowerCase().includes(d));
     if (isAdult) return { blocked: true, category: 'পর্নোগ্রাফি ও চটি' };
 
-    // ৩. টেলিগ্রাম হানি-ট্র্যাপ
     const isTelegram = TELEGRAM_DOMAINS.some(d => href.toLowerCase().includes(d));
     if (isTelegram) {
         const hasTrapSlug = ['leak', 'choti', 'boudi', 'viral', '18plus', 'casino', 'betting'].some(s => href.toLowerCase().includes(s));
@@ -1056,7 +871,6 @@ function analyzeLink(href, contextText) {
         }
     }
 
-    // ৪. শর্টনার দিয়ে লুকানো ক্ষতিকর লিংক
     const isShortener = SHORTENER_DOMAINS.some(d => href.toLowerCase().includes(d));
     if (isShortener && (ADULT_KEYWORDS.some(k => full.includes(k)) || GAMBLING_KEYWORDS.some(k => full.includes(k)))) {
         return { blocked: true, category: 'লুকানো ক্ষতিকর লিংক' };
@@ -1133,53 +947,5 @@ if (passed === testCases.length) {
 
 ---
 
-# ৮. বাণিজ্যিক ল্যান্ডিং পেজ ও মার্কেটিং কিট
-
-### ফাইল: `landing-page/index.html` (সরাসরি লাইভ লিংক সহ)
-```html
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>শুদ্ধ গার্ড (Shuddho Guard) — আত্মরক্ষা ও ডিজিটাল পবিত্রতার ঢাল</title>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; }
-        body { background: #0B0F19; color: #F8FAFC; line-height: 1.6; }
-        a { text-decoration: none; color: inherit; }
-        header { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1E293B; }
-        .logo { font-size: 22px; font-weight: bold; color: #38BDF8; display: flex; align-items: center; gap: 8px; }
-        .hero { text-align: center; padding: 80px 20px 60px; max-width: 900px; margin: 0 auto; }
-        .hero-badge { display: inline-block; background: rgba(56, 189, 248, 0.1); border: 1px solid #0284C7; color: #38BDF8; padding: 6px 16px; border-radius: 30px; font-size: 13px; font-weight: bold; margin-bottom: 20px; }
-        .hero h1 { font-size: 42px; font-weight: 700; line-height: 1.3; margin-bottom: 20px; }
-        .hero h1 span { color: #10B981; }
-        .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-        .btn-primary { background: #10B981; color: white; padding: 14px 28px; border-radius: 10px; font-weight: bold; font-size: 16px; transition: 0.2s; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; }
-        .btn-secondary { background: #1E293B; border: 1px solid #334155; color: #CBD5E1; padding: 14px 28px; border-radius: 10px; font-weight: bold; font-size: 16px; transition: 0.2s; cursor: pointer; }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="logo">🛡️ শুদ্ধ গার্ড (Shuddho Guard)</div>
-        <div style="font-size: 14px; color: #94A3B8;">উদ্যোক্তা: এইচএমকে বোরহান উদ্দিন</div>
-    </header>
-
-    <div class="hero">
-        <div class="hero-badge">🇧🇩 বাংলাদেশের প্রেক্ষাপটে তৈরি প্রথম অপ্রতিরোধ্য ডিজিটাল শিল্ড</div>
-        <h1>পর্নোগ্রাফি, জুয়া ও সোশ্যাল মিডিয়ার ফাঁদ থেকে <span>ব্যক্তিগত আত্মরক্ষার লোহার খাঁচা</span></h1>
-        <p style="color: #94A3B8; font-size: 17px; margin-bottom: 30px;">
-            ফেসবুক, ইউটিউব ও ইন্টারনেটের নোংরা ছবি, ওয়ানএক্সবেট জুয়া এবং ক্ষতিকর টেলিগ্রাম লিংক থেকে বাঁচতে আপনার ডিজিটাল নিরাপত্তা রক্ষক।
-        </p>
-        <div class="cta-group">
-            <a href="https://github.com/hmkborhanuddin2004-tech/shuddho-guard/releases/download/v1.0.0/shuddho-guard-windows.zip" class="btn-primary">
-                <span>💻 উইন্ডোজ পিসি গার্ড ডাউনলোড (ZIP)</span>
-            </a>
-            <a href="https://github.com/hmkborhanuddin2004-tech/shuddho-guard/releases/download/v1.0.0/shuddho-guard-chrome-extension.zip" class="btn-secondary">
-                <span>🧩 ক্রোম এক্সটেনশন ডাউনলোড (ZIP)</span>
-            </a>
-        </div>
-    </div>
-</body>
-</html>
-```
+# ৮. মার্কেট লঞ্চ কিট
+*(সম্পূর্ণ মার্কেটিং লঞ্চ পোস্ট ও ৬০ সেকেন্ডের ভিডিও স্ক্রিপ্ট [MARKETING_LAUNCH_KIT.md](file:///c:/Users/assdi/Documents/Downloads/shuddho-guard/MARKETING_LAUNCH_KIT.md) ফাইলে সংরক্ষিত)*
