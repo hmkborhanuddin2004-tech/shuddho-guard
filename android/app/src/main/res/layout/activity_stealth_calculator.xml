@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/calc_bg"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- ক্যালকুলেটর ডিসপ্লে -->
+    <TextView
+        android:id="@+id/tvDisplay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:gravity="bottom|end"
+        android:padding="24dp"
+        android:text="0"
+        android:textColor="@color/calc_display_text"
+        android:textSize="54sp"
+        android:textStyle="bold" />
+
+    <!-- বাটন গ্রিড -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:columnCount="4"
+        android:rowCount="4">
+
+        <Button android:id="@+id/btn7" text="7" style="@style/CalcBtnNum" />
+        <Button android:id="@+id/btn8" text="8" style="@style/CalcBtnNum" />
+        <Button android:id="@+id/btn9" text="9" style="@style/CalcBtnNum" />
+        <Button android:id="@+id/btnDivide" text="/" style="@style/CalcBtnOp" />
+
+        <Button android:id="@+id/btn4" text="4" style="@style/CalcBtnNum" />
+        <Button android:id="@+id/btn5" text="5" style="@style/CalcBtnNum" />
+        <Button android:id="@+id/btn6" text="6" style="@style/CalcBtnNum" />
+        <Button android:id="@+id/btnMultiply" text="*" style="@style/CalcBtnOp" />
+
+        <Button android:id="@+id/btn1" text="1" style="@style/CalcBtnNum" />
+        <Button android:id="@+id/btn2" text="2" style="@style/CalcBtnNum" />
+        <Button android:id="@+id/btn3" text="3" style="@style/CalcBtnNum" />
+        <Button android:id="@+id/btnMinus" text="-" style="@style/CalcBtnOp" />
+
+        <Button android:id="@+id/btnClear" text="C" style="@style/CalcBtnAction" />
+        <Button android:id="@+id/btn0" text="0" style="@style/CalcBtnNum" />
+        <Button android:id="@+id/btnEquals" text="=" style="@style/CalcBtnEquals" />
+        <Button android:id="@+id/btnPlus" text="+" style="@style/CalcBtnOp" />
+
+    </GridLayout>
+
+</LinearLayout>

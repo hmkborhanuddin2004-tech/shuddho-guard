@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বিপজ্জনক ফাঁদ প্রতিরোধ — শুদ্ধ গার্ড</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body {
+            background: #0B0F19;
+            color: #F8FAFC;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            background: #1E293B;
+            border: 2px solid #EF4444;
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 520px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(239, 68, 68, 0.4);
+        }
+        .icon { font-size: 64px; margin-bottom: 16px; }
+        h1 { color: #F87171; font-size: 24px; margin-bottom: 14px; }
+        p { color: #94A3B8; font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+        .target-url {
+            background: #0F172A;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #38BDF8;
+            word-break: break-all;
+            margin-bottom: 24px;
+        }
+        .btn {
+            background: #10B981;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover { background: #059669; }
+        .footer { margin-top: 20px; font-size: 12px; color: #64748B; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">🚨</div>
+        <h1>বিপজ্জনক ফাঁদ ব্লক করা হয়েছে!</h1>
+        <p>
+            আপনি যে লিঙ্কটিতে প্রবেশের চেষ্টা করছিলেন, সেটি একটি সামাজিক মাধ্যমে প্রতারণামূলক পোস্টের মাধ্যমে ছড়িয়ে পড়া অশ্লীল বা ক্ষতিকর টেলিগ্রাম চ্যানেলের সংযোগ।
+        </p>
+        <div id="targetUrl" class="target-url">অনিরাপদ সংযোগ প্রতিহত করা হয়েছে</div>
+        <a href="javascript:history.back()" class="btn">নিরাপদে ফিরে যান</a>
+        <div class="footer">🛡️ শুদ্ধ গার্ড (Shuddho Guard) সার্বক্ষণিক আপনার পাহারায় নিয়োজিত।</div>
+    </div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const url = params.get('url');
+        if (url) {
+            document.getElementById('targetUrl').textContent = '🔗 লক্ষ্য: ' + decodeURIComponent(url);
+        }
+    </script>
+</body>
+</html>

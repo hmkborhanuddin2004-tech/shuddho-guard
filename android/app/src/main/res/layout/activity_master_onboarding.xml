@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F172A"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="🛡️ শুদ্ধ গার্ড (Shuddho Guard)"
+            android:textColor="#38BDF8"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="ডিজিটাল আত্মরক্ষা ও পবিত্রতা অঙ্গীকার"
+            android:textColor="#94A3B8"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="20dp"
+            android:background="#334155" />
+
+        <!-- চেকলিস্ট ১ -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="✅ ১. ক্ষতিকর কন্টেন্ট ও সেফ সার্চ"
+            android:textColor="#F8FAFC"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="4dp"
+            android:text="গুগল ও বিং-এ SafeSearch বাধ্যতামূলক থাকবে এবং সমস্ত পর্ন ও জুয়ার সাইট ডিএনএস লেভেলে চিরতরে ব্লক থাকবে।"
+            android:textColor="#94A3B8"
+            android:textSize="13sp" />
+
+        <!-- চেকলিস্ট ২ -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="✅ ২. অফিশিয়াল টেলিগ্রাম গার্ড"
+            android:textColor="#F8FAFC"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="4dp"
+            android:text="টেলিগ্রামের সার্চ বক্সে বা কোনো চ্যানেলে বাংলা চটি ও ১৮+ শব্দ আসা মাত্রই টেলিগ্রাম তাৎক্ষণিক বন্ধ হয়ে যাবে।"
+            android:textColor="#94A3B8"
+            android:textSize="13sp" />
+
+        <!-- চেকলিস্ট ৩ -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="✅ ৩. ভিপিএন ও বাইপাস লক"
+            android:textColor="#F8FAFC"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="4dp"
+            android:text="বাইপাস করার জন্য ফোনে অন্য কোনো ভিপিএন চালানো যাবে না। ছদ্মবেশী ভিপিএন ইনস্টল হলেও স্বয়ংক্রিয়ভাবে ব্লক হবে।"
+            android:textColor="#94A3B8"
+            android:textSize="13sp" />
+
+        <!-- চেকলিস্ট ৪ -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="✅ ৪. অপ্রতিরোধ্য সুরক্ষা (Anti-Uninstall)"
+            android:textColor="#F8FAFC"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="4dp"
+            android:text="সেটিংস ও প্রাইভেট ডিএনএস লক থাকবে। মোবাইল ফ্ল্যাশ ছাড়া অ্যাপটি ডিলিট করা অসম্ভব।"
+            android:textColor="#94A3B8"
+            android:textSize="13sp" />
+
+        <!-- মাস্টার অ্যাক্টিভেশন বাটন -->
+        <Button
+            android:id="@+id/btnActivateAll"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#059669"
+            android:text="আমি একমত এবং চিরতরে সক্রিয় করুন"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="🔒 আপনার কোনো ডেটা কোথাও পাঠানো হবে না। ১০০% ব্যক্তিগত।"
+            android:textColor="#64748B"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.shuddho.guard">
+
+    <!-- ইন্টারনেটের রুট ফিল্টারিং ও লোকাল ভিপিএন পারমিশন -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    
+    <!-- ছদ্মবেশী ভিপিএন স্ক্যান করার জন্য সব অ্যাপের তথ্য পাওয়ার পারমিশন -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    
+    <!-- ডিভাইস অ্যাডমিনের মাধ্যমে সিস্টেম লক ও সেটিংস গার্ড -->
+    <uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Calculator"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ShuddhoGuard">
+
+        <!-- ছদ্মবেশী ক্যালকুলেটর (মেইন লঞ্চার অ্যাক্টিভিটি) -->
+        <activity
+            android:name=".ui.StealthCalculatorActivity"
+            android:exported="true"
+            android:label="Calculator"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ওয়ান-ক্লিক মাস্টার সেটআপ পেজ -->
+        <activity
+            android:name=".ui.MasterOnboardingActivity"
+            android:exported="false"
+            android:label="Digital Armor Setup"
+            android:screenOrientation="portrait" />
+
+        <!-- পিন দিয়ে আনলক করার পর গোপন অ্যাডমিন ড্যাশবোর্ড -->
+        <activity
+            android:name=".ui.VaultDashboardActivity"
+            android:exported="false"
+            android:label="Shuddho Guard Console"
+            android:screenOrientation="portrait" />
+
+        <!-- ১. লোকাল অলওয়েজ-অন ভিপিএন সার্ভিস (SafeSearch ও DNS ফিল্টার) -->
+        <service
+            android:name=".services.ShuddhoVpnService"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+        </service>
+
+        <!-- ২. অ্যাক্সেসিবিলিটি সার্ভিস (টেলিগ্রাম সার্চ ও নোংরা চ্যানেল তাৎক্ষণিক ব্লকার) -->
+        <service
+            android:name=".services.TelegramScreenGuardService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true"
+            android:label="System Accessibility Armor">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- ৩. ডিভাইস অ্যাডমিনিস্ট্রেটর রিসিভার (আন-ইনস্টল প্রতিরোধক প্রাচীর) -->
+        <receiver
+            android:name=".receivers.ShuddhoDeviceAdminReceiver"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_policies" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+                <action android:name="android.app.action.PROFILE_PROVISIONING_COMPLETE" />
+            </intent-filter>
+        </receiver>
+
+        <!-- ৪. নতুন অ্যাপ ইনস্টল রিসিভার (ছদ্মবেশী ভিপিএন স্বয়ংক্রিয় শনাক্তকরণ) -->
+        <receiver
+            android:name=".receivers.AppInstallWatcher"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

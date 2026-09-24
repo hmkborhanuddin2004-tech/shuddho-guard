@@ -1,0 +1,97 @@
+package com.shuddho.guard.services
+
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Intent
+import android.net.VpnService
+import android.os.Build
+import android.os.ParcelFileDescriptor
+import android.util.Log
+
+/**
+ * লোকাল অলওয়েজ-অন ভিপিএন ইঞ্জিন।
+ * এটি CleanBrowsing এবং Cloudflare Family IPv4 ও IPv6 ডিএনএস দিয়ে ট্রাফিক পরিচালনা করে।
+ */
+class ShuddhoVpnService : VpnService() {
+
+    private var vpnInterface: ParcelFileDescriptor? = null
+    private var isRunning = false
+
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        if (!isRunning) {
+            startVpnTunnel()
+        }
+        return START_STICKY
+    }
+
+    private fun startVpnTunnel() {
+        try {
+            createNotificationChannel()
+            startForeground(101, createSilentNotification())
+
+            val builder = Builder()
+                .setSession("ShuddhoGuardShield")
+                .addAddress("10.1.10.1", 24)
+                // ১. ফ্যামিলি ও অ্যাডাল্ট ফিল্টার ডিএনএস (IPv4)
+                .addDnsServer("185.228.168.10") // CleanBrowsing Adult Filter
+                .addDnsServer("1.1.1.3")         // Cloudflare Family SafeSearch DNS
+                // ২. IPv6 ফ্যামিলি ডিএনএস
+                .addDnsServer("2606:4700:4700::1113")
+                // ৩. রাউটিং
+                .addRoute("185.228.168.10", 32)
+                .addRoute("1.1.1.3", 32)
+                .setBlocking(true)
+
+            vpnInterface = builder.establish()
+            isRunning = true
+            Log.i("ShuddhoGuard", "🛡️ লোকাল গার্ড ভিপিএন সফলভাবে সক্রিয় হয়েছে।")
+
+        } catch (e: Exception) {
+            Log.e("ShuddhoGuard", "ভিপিএন সংযোগে ত্রুটি: ${e.message}")
+        }
+    }
+
+    override fun onRevoke() {
+        super.onRevoke()
+        Log.w("ShuddhoGuard", "⚠️ ভিপিএন পারমিশন প্রত্যাহার করা হয়েছে।")
+        vpnInterface?.close()
+        vpnInterface = null
+        isRunning = false
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                "shuddho_guard_channel",
+                "System Background Armor",
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                setShowBadge(false)
+            }
+            val manager = getSystemService(NotificationManager::class.java)
+            manager?.createNotificationChannel(channel)
+        }
+    }
+
+    private fun createSilentNotification(): Notification {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Notification.Builder(this, "shuddho_guard_channel")
+                .setContentTitle("Calculator Engine")
+                .setContentText("Math core running")
+                .setSmallIcon(android.R.drawable.stat_notify_sync_noanim)
+                .build()
+        } else {
+            Notification.Builder(this)
+                .setContentTitle("Calculator")
+                .build()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        vpnInterface?.close()
+        vpnInterface = null
+        isRunning = false
+    }
+}

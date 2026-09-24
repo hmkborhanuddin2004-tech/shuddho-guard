@@ -1,0 +1,60 @@
+{
+  "manifest_version": 3,
+  "name": "শুদ্ধ গার্ড — সোশ্যাল মিডিয়া শিল্ড (Shuddho Guard)",
+  "version": "1.0.0",
+  "description": "ফেসবুক, ইনস্টাগ্রামে আপত্তিকর ছবি ব্লার এবং কমেন্টের প্রতারণামূলক টেলিগ্রাম লিংক প্রতিরোধক।",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "শুদ্ধ গার্ড",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*.facebook.com/*",
+    "*://*.instagram.com/*",
+    "*://*.tiktok.com/*",
+    "*://*.youtube.com/*",
+    "*://*.twitter.com/*",
+    "*://*.x.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.facebook.com/*",
+        "*://*.instagram.com/*",
+        "*://*.tiktok.com/*",
+        "*://*.youtube.com/*",
+        "*://*.twitter.com/*",
+        "*://*.x.com/*"
+      ],
+      "js": [
+        "scripts/trap-link-interceptor.js",
+        "scripts/ai-vision-blur.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pages/warning.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

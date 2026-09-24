@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>শুদ্ধ গার্ড</title>
+    <style>
+        body {
+            width: 290px;
+            margin: 0;
+            padding: 16px;
+            background: #0F172A;
+            color: #F8FAFC;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hind Siliguri', sans-serif;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 10px;
+        }
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #38BDF8;
+        }
+        .status-badge {
+            background: #065F46;
+            color: #34D399;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 14px;
+        }
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .stat-box {
+            background: #1E293B;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px 8px;
+            text-align: center;
+        }
+        .stat-val {
+            font-size: 18px;
+            font-weight: bold;
+            color: #38BDF8;
+        }
+        .stat-label {
+            font-size: 11px;
+            color: #94A3B8;
+            margin-top: 2px;
+        }
+        .feature-item {
+            font-size: 12px;
+            color: #94A3B8;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer {
+            margin-top: 14px;
+            text-align: center;
+            font-size: 11px;
+            color: #64748B;
+            border-top: 1px solid #1E293B;
+            padding-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span style="font-size: 24px;">🛡️</span>
+        <div>
+            <div class="title">শুদ্ধ গার্ড শিল্ড</div>
+            <div style="font-size: 11px; color: #94A3B8;">সোশ্যাল মিডিয়া প্রোটেক্টর</div>
+        </div>
+    </div>
+
+    <div class="status-badge">🟢 সম্পূর্ণ সক্রিয় ও পাহারাধীন</div>
+
+    <div class="stats-container">
+        <div class="stat-box">
+            <div class="stat-val" id="stat-traps">0</div>
+            <div class="stat-label">আটকে দেওয়া ফাঁদ</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-val" id="stat-blurred">0</div>
+            <div class="stat-label">ব্লার করা ছবি</div>
+        </div>
+    </div>
+
+    <div class="feature-item">
+        <span>✅</span>
+        <span>ফেসবুক ও ইনস্টাগ্রাম এআই ছবি ব্লার</span>
+    </div>
+    <div class="feature-item">
+        <span>✅</span>
+        <span>কমেন্টের ফাঁদ ও টেলিগ্রাম লিঙ্ক ইন্টারসেপ্টর</span>
+    </div>
+    <div class="feature-item">
+        <span>✅</span>
+        <span>SafeSearch সার্বক্ষণিক কার্যকর</span>
+    </div>
+
+    <div class="footer">
+        নিরাপদ ও আত্মশুদ্ধিময় ইন্টারনেট ব্রাউজিং
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

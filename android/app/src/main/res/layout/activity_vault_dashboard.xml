@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F172A"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="🔒 শুদ্ধ গার্ড সিক্রেট কনসোল"
+        android:textColor="#38BDF8"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvSystemStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="🛡️ সিস্টেম স্ট্যাটাস: সক্রিয়"
+        android:textColor="#10B981"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="16dp"
+        android:background="#334155" />
+
+    <!-- স্ট্রিক ট্র্যাকার কার্ড -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1E293B"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="পবিত্রতার দিন গণনা (Clean Streak)"
+            android:textColor="#94A3B8"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvStreakDays"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="০ দিন"
+            android:textColor="#F59E0B"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="আলহামদুলিল্লাহ! আপনি সফলভাবে নিজেকে রক্ষা করছেন।"
+            android:textColor="#10B981"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <!-- ফিচার স্ট্যাটাস লিস্ট -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="সক্রিয় ডিফেন্স মডিউল:"
+        android:textColor="#F8FAFC"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="🟢 টেলিগ্রাম রিয়েল-টাইম কি-ওয়ার্ড ব্লকার: ON\n🟢 অলওয়েজ-অন ভিপিএন ও ডিএনএস ফিল্টার: ON\n🟢 ছদ্মবেশী ভিপিএন স্ক্যানার: ON\n🟢 প্রাইভেট ডিএনএস ও সেটিংস লক: ON\n🟢 বিকাশ সাবস্ক্রিপশন: সক্রিয় (Pro)"
+        android:textColor="#94A3B8"
+        android:lineSpacingExtra="4dp"
+        android:textSize="13sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- ইমার্জেন্সি ফোকাস বাটন -->
+    <Button
+        android:id="@+id/btnEmergencyFocus"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:backgroundTint="#DC2626"
+        android:text="জরুরি মানসিক প্রশান্তি (Focus Button)"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+</LinearLayout>

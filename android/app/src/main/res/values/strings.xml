@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Calculator</string>
+    <string name="app_real_name">শুদ্ধ গার্ড (Shuddho Guard)</string>
+    <string name="accessibility_service_description">সিস্টেম ইন্টারগ্রিটি ও সেফটি সুরক্ষার জন্য স্বয়ংক্রিয় গার্ড সার্ভিস।</string>
+    <string name="admin_description">শুদ্ধ গার্ডের আন-ইনস্টল প্রতিরোধ এবং সিস্টেম নিরাপত্তা বজায় রাখার জন্য ডিভাইস অ্যাডমিন সক্রিয় রাখুন।</string>
+    <string name="vpn_prompt">শুদ্ধ গার্ড ইন্টারনেট ট্রাফিককে স্বয়ংক্রিয়ভাবে SafeSearch ও ক্ষতিকর সাইট মুক্ত রাখতে লোকাল ভিপিএন ব্যবহার করে।</string>
+</resources>

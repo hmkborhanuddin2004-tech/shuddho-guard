@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="calc_bg">#17171C</color>
+    <color name="calc_display_text">#FFFFFF</color>
+    <color name="calc_btn_num">#2E2F3E</color>
+    <color name="calc_btn_op">#4B5EAA</color>
+    <color name="calc_btn_action">#D4D4D2</color>
+    <color name="calc_btn_equals">#10B981</color>
+    <color name="primary_shield">#059669</color>
+    <color name="danger_red">#DC2626</color>
+</resources>

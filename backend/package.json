@@ -1,0 +1,14 @@
+{
+  "name": "shuddho-guard-backend",
+  "version": "1.0.0",
+  "description": "শুদ্ধ গার্ড ক্লাউড সিঙ্ক সার্ভার ও ডাইনামিক ব্ল্যাকলিস্ট এপিআই",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test-backend.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}

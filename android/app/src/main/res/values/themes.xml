@@ -1,0 +1,36 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.ShuddhoGuard" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#17171C</item>
+        <item name="android:navigationBarColor">#17171C</item>
+    </style>
+
+    <style name="CalcBtnBase">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_rowWeight">1</item>
+        <item name="android:layout_columnWeight">1</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CalcBtnNum" parent="CalcBtnBase">
+        <item name="android:backgroundTint">@color/calc_btn_num</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="CalcBtnOp" parent="CalcBtnBase">
+        <item name="android:backgroundTint">@color/calc_btn_op</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="CalcBtnAction" parent="CalcBtnBase">
+        <item name="android:backgroundTint">@color/calc_btn_action</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+    <style name="CalcBtnEquals" parent="CalcBtnBase">
+        <item name="android:backgroundTint">@color/calc_btn_equals</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+</resources>
