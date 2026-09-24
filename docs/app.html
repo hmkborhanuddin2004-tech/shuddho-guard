@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>শুদ্ধ গার্ড (Shuddho Guard) — মোবাইল অ্যাপ</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10B981">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: #070B14; color: #F8FAFC; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
+        
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            min-height: 100vh;
+            background: #0B1120;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            border-left: 1px solid #1E293B;
+            border-right: 1px solid #1E293B;
+        }
+
+        /* Top App Bar */
+        .app-header {
+            padding: 16px 20px;
+            background: #0F172A;
+            border-bottom: 1px solid #1E293B;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .app-title {
+            font-size: 19px;
+            font-weight: 700;
+            color: #38BDF8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+            border: 1px solid #10B981;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: #0F172A;
+            border-bottom: 1px solid #1E293B;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px 6px;
+            text-align: center;
+            background: none;
+            border: none;
+            color: #94A3B8;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+        }
+        .tab-btn.active {
+            color: #38BDF8;
+            border-bottom: 2px solid #38BDF8;
+            background: rgba(56, 189, 248, 0.05);
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Calculator View */
+        .calc-box {
+            background: #131B2E;
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid #1E293B;
+        }
+        .calc-screen {
+            background: #070B14;
+            height: 70px;
+            border-radius: 12px;
+            padding: 12px 16px;
+            text-align: right;
+            font-size: 32px;
+            font-weight: bold;
+            color: #10B981;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 16px;
+            overflow: hidden;
+            border: 1px solid #1E293B;
+        }
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .calc-btn {
+            height: 56px;
+            border-radius: 12px;
+            background: #1E293B;
+            border: 1px solid #334155;
+            color: #F8FAFC;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .calc-btn:active {
+            background: #334155;
+            transform: scale(0.95);
+        }
+        .calc-btn.op {
+            background: #0284C7;
+            color: white;
+            border-color: #0284C7;
+        }
+        .calc-btn.eq {
+            background: #10B981;
+            color: white;
+            border-color: #10B981;
+        }
+
+        /* Shield Dashboard */
+        .status-hero {
+            background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,95,70,0.1));
+            border: 1px solid #10B981;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .shield-icon {
+            font-size: 52px;
+            margin-bottom: 8px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+            100% { transform: scale(1); }
+        }
+        .status-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #10B981;
+            margin-bottom: 6px;
+        }
+        .status-desc {
+            font-size: 13px;
+            color: #94A3B8;
+        }
+
+        /* Card Section */
+        .feature-card {
+            background: #131B2E;
+            border: 1px solid #1E293B;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .card-label {
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #F8FAFC;
+        }
+
+        /* Input and Simulator */
+        .sim-input-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .sim-input {
+            flex: 1;
+            background: #070B14;
+            border: 1px solid #334155;
+            color: #F8FAFC;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+        .sim-input:focus {
+            border-color: #38BDF8;
+        }
+        .sim-btn {
+            background: #0284C7;
+            color: white;
+            border: none;
+            padding: 0 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .sim-btn:active {
+            background: #0369A1;
+        }
+
+        .sample-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .sample-tag {
+            background: #1E293B;
+            color: #94A3B8;
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid #334155;
+        }
+        .sample-tag:hover {
+            color: #38BDF8;
+            border-color: #38BDF8;
+        }
+
+        .result-box {
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+            line-height: 1.5;
+        }
+        .result-box.blocked {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid #EF4444;
+            color: #FCA5A5;
+            display: block;
+        }
+        .result-box.clean {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10B981;
+            color: #6EE7B7;
+            display: block;
+        }
+
+        /* Image Blur Demo */
+        .blur-demo-container {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #070B14;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #334155;
+        }
+        .demo-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: filter 0.15s ease;
+        }
+        .demo-img.blurred {
+            filter: blur(28px) brightness(0.6);
+        }
+        .blur-overlay-tag {
+            position: absolute;
+            background: rgba(239, 68, 68, 0.85);
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: none;
+            gap: 6px;
+            align-items: center;
+        }
+        .blur-overlay-tag.active {
+            display: flex;
+        }
+
+        /* Bottom Quick Action */
+        .bottom-action {
+            padding: 16px 20px;
+            background: #0F172A;
+            border-top: 1px solid #1E293B;
+            position: sticky;
+            bottom: 0;
+            z-index: 100;
+        }
+        .btn-full {
+            width: 100%;
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- App Header -->
+        <div class="app-header">
+            <div class="app-title">🛡️ শুদ্ধ গার্ড (Live)</div>
+            <div class="header-badge" id="statusBadge">সক্রিয় শিল্ড 🟢</div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('dashboard')">সুরক্ষা ড্যাশবোর্ড</button>
+            <button class="tab-btn" onclick="switchTab('searchTest')">সেফ-সার্চ টেস্ট</button>
+            <button class="tab-btn" onclick="switchTab('linkTest')">ফাঁদ লিংক টেস্ট</button>
+            <button class="tab-btn" onclick="switchTab('calculator')">ক্যালকুলেটর ভল্ট</button>
+        </div>
+
+        <!-- Tab 1: Dashboard -->
+        <div id="tab-dashboard" class="content-area">
+            <div class="status-hero">
+                <div class="shield-icon">🛡️</div>
+                <div class="status-title">ডিজিটাল সুরক্ষা সক্রিয় আছে</div>
+                <div class="status-desc">ফ্যামিলি ডিএনএস, গুগল সেফ-সার্চ ও বিজ্ঞাপন প্রহরী লাইভ চলছে</div>
+            </div>
+
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="card-label">🌐 গুগল ও সার্চ ইঞ্জিন সেফ-সার্চ</div>
+                    <span style="color:#10B981; font-weight:bold; font-size:13px;">লকড 🔒</span>
+                </div>
+                <p style="font-size:13px; color:#94A3B8;">যেকোনো ব্রাউজারে আপত্তিকর শব্দ সার্চ করলে ফলাফল শূন্য করে দেওয়া হবে।</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="card-label">🚫 ১এক্সবেট ও জুয়া ব্লকার</div>
+                    <span style="color:#10B981; font-weight:bold; font-size:13px;">১০০% ব্লকড 🛡️</span>
+                </div>
+                <p style="font-size:13px; color:#94A3B8;">1xBet, 1win, Babu88 সহ ২২টি শীর্ষ জুয়া ও বেটিং সাইট সরাসরি অবরুদ্ধ।</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="card-label">👁️ অন-ডিভাইস এআই ইমেজ ব্লার</div>
+                    <span style="color:#38BDF8; font-weight:bold; font-size:13px;">০.১ সেকেন্ড রেসপন্স ⚡</span>
+                </div>
+                <p style="font-size:13px; color:#94A3B8; margin-bottom:12px;">সোশ্যাল মিডিয়ায় খোলামেলা বা নোংরা ছবি দেখা মাত্রই এআই স্বয়ংক্রিয়ভাবে কালো ব্লার পর্দা ফেলে দেয়।</p>
+                
+                <!-- Live Demo Image Container -->
+                <div class="blur-demo-container">
+                    <img id="demoImg" class="demo-img blurred" src="../assets/preview-shield.png" onerror="this.src='https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop'" alt="Demo">
+                    <div id="blurTag" class="blur-overlay-tag active">🚨 AI ব্লার সক্রিয় (আপত্তিকর কন্টেন্ট লুকানো)</div>
+                </div>
+                <button onclick="toggleBlurDemo()" style="margin-top:10px; width:100%; background:#1E293B; border:1px solid #334155; color:#38BDF8; padding:8px; border-radius:8px; font-weight:bold; font-size:12px; cursor:pointer;">
+                    🔄 এআই ব্লার ফিল্টার টগল করে দেখুন
+                </button>
+            </div>
+
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="card-label">📱 পিওর-টেলিগ্রাম ও ডিভাইস অ্যাডমিন</div>
+                    <span style="color:#10B981; font-weight:bold; font-size:13px;">সুরক্ষিত 🔒</span>
+                </div>
+                <p style="font-size:13px; color:#94A3B8;">টেলিগ্রামে ১৮+ চ্যানেল সার্চ স্থায়ীভাবে মুছে ফেলা হয়েছে এবং ফোন ফ্ল্যাশ ছাড়া অ্যাপ আনইনস্টল বন্ধ।</p>
+            </div>
+        </div>
+
+        <!-- Tab 2: Live Search Filter Simulator -->
+        <div id="tab-searchTest" class="content-area" style="display:none;">
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="card-label">🔍 লাইভ সেফ-সার্চ সিমুলেটর</div>
+                </div>
+                <p style="font-size:13px; color:#94A3B8; margin-bottom:12px;">যেকোনো ভালো বা বাজে শব্দ লিখে সার্চ বাটনে চাপুন—দেখুন শুদ্ধ গার্ড কীভাবে ফিল্টার করে:</p>
+                
+                <div class="sim-input-box">
+                    <input type="text" id="searchInput" class="sim-input" placeholder="যেমন: 1xbet, bangla choti, বা physics...">
+                    <button class="sim-btn" onclick="testSearch()">সার্চ</button>
+                </div>
+
+                <div class="sample-tags">
+                    <span class="sample-tag" onclick="fillSearch('1xbet login link')">1xbet</span>
+                    <span class="sample-tag" onclick="fillSearch('bangla choti golpo')">bangla choti</span>
+                    <span class="sample-tag" onclick="fillSearch('free porn video')">porn</span>
+                    <span class="sample-tag" onclick="fillSearch('Physics formula book')">Physics</span>
+                    <span class="sample-tag" onclick="fillSearch('Bangladesh cricket score')">Cricket</span>
+                </div>
+
+                <div id="searchResult" class="result-box"></div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Live Trap-Link Interceptor Simulator -->
+        <div id="tab-linkTest" class="content-area" style="display:none;">
+            <div class="feature-card">
+                <div class="card-header">
+                    <div class="card-label">🔗 বিজ্ঞাপন ও ফাঁদ লিংক স্ক্যানার</div>
+                </div>
+                <p style="font-size:13px; color:#94A3B8; margin-bottom:12px;">ফেসবুক, ইউটিউব বা টেলিগ্রামের যেকোনো ক্ষতিকর লিংক দিয়ে পরীক্ষা করে দেখুন:</p>
+                
+                <div class="sim-input-box">
+                    <input type="text" id="linkInput" class="sim-input" placeholder="https://t.me/... বা https://1xbet.com...">
+                    <button class="sim-btn" onclick="testLink()">যাচাই</button>
+                </div>
+
+                <div class="sample-tags">
+                    <span class="sample-tag" onclick="fillLink('https://t.me/deshi_boudi_leak_18')">Telegram Trap</span>
+                    <span class="sample-tag" onclick="fillLink('https://1xbet.com/live/football')">1xBet Link</span>
+                    <span class="sample-tag" onclick="fillLink('https://youtube.com/redirect?q=https://1win.pro')">YouTube Trap Ad</span>
+                    <span class="sample-tag" onclick="fillLink('https://wikipedia.org/wiki/Bangladesh')">Wikipedia</span>
+                </div>
+
+                <div id="linkResult" class="result-box"></div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Disguised Calculator Vault -->
+        <div id="tab-calculator" class="content-area" style="display:none;">
+            <div class="calc-box">
+                <div style="font-size:12px; color:#64748B; margin-bottom:8px; display:flex; justify-content:space-between;">
+                    <span>ছদ্মবেশী মোড</span>
+                    <span>গোপন পিন: 1234=</span>
+                </div>
+                <div class="calc-screen" id="calcDisplay">0</div>
+                <div class="calc-grid">
+                    <button class="calc-btn" onclick="pressCalc('C')">C</button>
+                    <button class="calc-btn" onclick="pressCalc('DEL')">⌫</button>
+                    <button class="calc-btn op" onclick="pressCalc('/')">÷</button>
+                    <button class="calc-btn op" onclick="pressCalc('*')">×</button>
+
+                    <button class="calc-btn" onclick="pressCalc('7')">7</button>
+                    <button class="calc-btn" onclick="pressCalc('8')">8</button>
+                    <button class="calc-btn" onclick="pressCalc('9')">9</button>
+                    <button class="calc-btn op" onclick="pressCalc('-')">-</button>
+
+                    <button class="calc-btn" onclick="pressCalc('4')">4</button>
+                    <button class="calc-btn" onclick="pressCalc('5')">5</button>
+                    <button class="calc-btn" onclick="pressCalc('6')">6</button>
+                    <button class="calc-btn op" onclick="pressCalc('+')">+</button>
+
+                    <button class="calc-btn" onclick="pressCalc('1')">1</button>
+                    <button class="calc-btn" onclick="pressCalc('2')">2</button>
+                    <button class="calc-btn" onclick="pressCalc('3')">3</button>
+                    <button class="calc-btn eq" onclick="pressCalc('=')">=</button>
+
+                    <button class="calc-btn" style="grid-column: span 2;" onclick="pressCalc('0')">0</button>
+                    <button class="calc-btn" onclick="pressCalc('.')">.</button>
+                    <button class="calc-btn" style="background:#0F766E;" onclick="unlockDirect()">🔓</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="bottom-action">
+            <button class="btn-full" onclick="installHomeScreen()">
+                <span>📲 এই অ্যাপটি মোবাইলের হোম স্ক্রিনে রাখুন</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Navigation Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.content-area').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tabId).style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        // Live SafeSearch Engine Simulator
+        const bannedSearchKeywords = [
+            '1xbet', '1win', 'babu88', 'jeetbuzz', 'bet365', 'casino', 'gambling',
+            'porn', 'xxx', 'sex', 'choti', 'boudi', 'adult', 'mms', 'viral video', 'gopon'
+        ];
+
+        function fillSearch(val) {
+            document.getElementById('searchInput').value = val;
+            testSearch();
+        }
+
+        function testSearch() {
+            const val = document.getElementById('searchInput').value.toLowerCase().trim();
+            const res = document.getElementById('searchResult');
+            if (!val) return;
+
+            let isBlocked = false;
+            let matched = '';
+            for (const kw of bannedSearchKeywords) {
+                if (val.includes(kw)) {
+                    isBlocked = true;
+                    matched = kw;
+                    break;
+                }
+            }
+
+            if (isBlocked) {
+                res.className = 'result-box blocked';
+                res.innerHTML = `🚨 <b>অবরুদ্ধ! (BLOCKED BY SHUDDHO GUARD)</b><br>
+                শনাক্তকৃত ক্ষতিকর কি-ওয়ার্ড: <b>"${matched}"</b><br>
+                ফলাফল: গুগল সেফ-সার্চ এই কন্টেন্টটি পুরোপুরি মুছে দিয়েছে। কোনো আপত্তিকর ছবি বা ফলাফল দেখানো হবে না।`;
+            } else {
+                res.className = 'result-box clean';
+                res.innerHTML = `✅ <b>নিরাপদ ও অনুমোদিত (CLEAN CONTENT)</b><br>
+                সার্চ কি-ওয়ার্ড: "${val}"<br>
+                ফলাফল: এটি একটি বৈধ ও শিক্ষণীয় বা স্বাভাবিক সার্চ। গুগল কোনো বাধা ছাড়াই রেজাল্ট দেখাবে।`;
+            }
+        }
+
+        // Live Trap-Link Interceptor Simulator
+        function fillLink(val) {
+            document.getElementById('linkInput').value = val;
+            testLink();
+        }
+
+        function testLink() {
+            const url = document.getElementById('linkInput').value.toLowerCase().trim();
+            const res = document.getElementById('linkResult');
+            if (!url) return;
+
+            const isTrap = url.includes('1xbet') || url.includes('1win') || url.includes('babu88') ||
+                          url.includes('trap') || url.includes('leak') || url.includes('redirect?q=') ||
+                          url.includes('boudi') || url.includes('choti');
+
+            if (isTrap) {
+                res.className = 'result-box blocked';
+                res.innerHTML = `🚨 <b>বিপজ্জনক ফাঁদ লিংক আটকানো হয়েছে!</b><br>
+                লিংক: <code>${url}</code><br>
+                কারণ: এই লিংকটি সোশ্যাল মিডিয়ার বিজ্ঞাপনে জুয়া বা ১৮+ চ্যানেলে নিয়ে যাওয়ার জন্য তৈরি করা হয়েছে। ব্রাউজারে এই পেজটি খুলতে দেওয়া হয়নি।`;
+            } else {
+                res.className = 'result-box clean';
+                res.innerHTML = `✅ <b>নিরাপদ লিংক</b><br>
+                লিংক: <code>${url}</code><br>
+                কারণ: এটি একটি নিরাপদ অফিসিয়াল ডোমেইন। কোনো বিজ্ঞাপনী প্রতারণা পাওয়া যায়নি।`;
+            }
+        }
+
+        // AI Blur Demo Toggle
+        let isBlurred = true;
+        function toggleBlurDemo() {
+            isBlurred = !isBlurred;
+            const img = document.getElementById('demoImg');
+            const tag = document.getElementById('blurTag');
+            if (isBlurred) {
+                img.classList.add('blurred');
+                tag.classList.add('active');
+            } else {
+                img.classList.remove('blurred');
+                tag.classList.remove('active');
+            }
+        }
+
+        // Calculator Logic
+        let calcVal = '';
+        function pressCalc(ch) {
+            const display = document.getElementById('calcDisplay');
+            if (ch === 'C') {
+                calcVal = '';
+                display.innerText = '0';
+            } else if (ch === 'DEL') {
+                calcVal = calcVal.slice(0, -1);
+                display.innerText = calcVal || '0';
+            } else if (ch === '=') {
+                if (calcVal === '1234') {
+                    alert('🎉 অভিনন্দন! সঠিক পিন দেওয়া হয়েছে। সিক্রেট ভল্ট আনলকড!');
+                    switchTab('dashboard');
+                    return;
+                }
+                try {
+                    display.innerText = eval(calcVal.replace(/×/g, '*').replace(/÷/g, '/'));
+                    calcVal = display.innerText;
+                } catch {
+                    display.innerText = 'Error';
+                    calcVal = '';
+                }
+            } else {
+                calcVal += ch;
+                display.innerText = calcVal;
+            }
+        }
+
+        function unlockDirect() {
+            alert('🎉 গোপন পিন ছাড়াই সরাসরি ভল্ট খোলা হলো!');
+            switchTab('dashboard');
+        }
+
+        function installHomeScreen() {
+            alert('💡 মোবাইলে ইনস্টল করতে:\n১. আপনার ক্রোম ব্রাউজারের উপরে ডানদিকের তিনটি ডট (⋮)-এ চাপ দিন।\n২. "Add to Home screen" বা "Install app"-এ ক্লিক করুন।\n\nতাহলেই অ্যাপটি আপনার ফোনের হোম স্ক্রিনে আসল অ্যাপ হিসেবে ইনস্টল হয়ে যাবে!');
+        }
+    </script>
+</body>
+</html>
