@@ -37,22 +37,23 @@ $blockedDomains = @(
     "deshiboudi.com", "banglachoti.com", "chotikahini.com",
     "bdchoti.net", "chotigolpo.com", "banglasex.net",
     "redwap.me", "spankbang.com", "tube8.com", "youporn.com",
-    "tnaflix.com", "beeg.com", "brazzers.com", "eporner.com"
+    "tnaflix.com", "beeg.com", "brazzers.com", "eporner.com",
+    "1xbet.com", "melbet.org", "babu88.com", "jeetbuzz.com", "1win.pro"
 )
 
 function Install-ShuddhoProtection {
-    Write-Host "[1/3] ব্যাকআপ তৈরি ও হোস্ট ফাইল আনলক করা হচ্ছে..." -ForegroundColor Cyan
+    Write-Host "[1/3] ব্যাকআপ তৈরি ও হোস্ট ফাইল প্রস্তুত করা হচ্ছে..." -ForegroundColor Cyan
     if (!(Test-Path $backupPath) -and (Test-Path $hostsPath)) {
         Copy-Item $hostsPath $backupPath -Force
     }
 
     try { Set-ItemProperty -Path $hostsPath -Name IsReadOnly -Value $false -ErrorAction SilentlyContinue } catch {}
 
-    Write-Host "[2/3] সেফ সার্চ ও পর্ন ব্লকিং রুলস অন্তর্ভুক্ত করা হচ্ছে..." -ForegroundColor Cyan
+    Write-Host "[2/3] সেফ সার্চ ও পর্ন/জুয়া ব্লকিং রুলস অন্তর্ভুক্ত করা হচ্ছে..." -ForegroundColor Cyan
     $currentHosts = Get-Content $hostsPath -Raw -ErrorAction SilentlyContinue
     if (-not $currentHosts) { $currentHosts = "" }
 
-    # FIX #8: পূর্বের কোনো শুদ্ধ গার্ড ব্লক থাকলে তা প্রথমে মুছে ফেলে ডুপ্লিকেশন রোধ করা
+    # FIX #8: পূর্বের কোনো শুদ্ধ গার্ড ব্লক থাকলে তা প্রথমে মুছে ফেলা
     $currentHosts = [regex]::Replace(
         $currentHosts,
         '(?ms)^[ \t]*# === SHUDDHO GUARD SAFE PROTECTION START ===.*?^[ \t]*# === SHUDDHO GUARD SAFE PROTECTION END ===[ \t]*\r?\n?',
@@ -60,13 +61,13 @@ function Install-ShuddhoProtection {
     )
 
     $newEntries = New-Object System.Text.StringBuilder
-    $newEntries.AppendLine($currentHosts.TrimEnd())
-    $newEntries.AppendLine("`n# === SHUDDHO GUARD SAFE PROTECTION START ===")
+    [void]$newEntries.AppendLine($currentHosts.TrimEnd())
+    [void]$newEntries.AppendLine("`n# === SHUDDHO GUARD SAFE PROTECTION START ===")
 
     foreach ($entry in $safeSearchEntries) {
         $pattern = '(?m)^[ \t]*' + [regex]::Escape($entry) + '[ \t]*$'
         if ($currentHosts -notmatch $pattern) {
-            $newEntries.AppendLine($entry)
+            [void]$newEntries.AppendLine($entry)
         }
     }
 
@@ -74,19 +75,17 @@ function Install-ShuddhoProtection {
         $blockLine = "0.0.0.0 $domain"
         $pattern = '(?m)^[ \t]*' + [regex]::Escape($blockLine) + '[ \t]*$'
         if ($currentHosts -notmatch $pattern) {
-            $newEntries.AppendLine($blockLine)
+            [void]$newEntries.AppendLine($blockLine)
         }
     }
-    $newEntries.AppendLine("# === SHUDDHO GUARD SAFE PROTECTION END ===")
+    [void]$newEntries.AppendLine("# === SHUDDHO GUARD SAFE PROTECTION END ===")
 
-    # FIX #10(a): UTF-8 BOM ছাড়া ASCII ফরম্যাটে সেভ (উইন্ডোজ হোস্ট পার্সার সুরক্ষা)
+    # FIX #10(a): UTF-8 BOM ছাড়া ASCII ফরম্যাটে সেভ
     [System.IO.File]::WriteAllText($hostsPath, $newEntries.ToString(), [System.Text.Encoding]::ASCII)
-
-    # FIX #10(b): IsReadOnly true পরিহার (অন্যান্য সিকিউরিটি সফটওয়্যার ও ভিপিএন সুরক্ষা)
 
     Write-Host "[3/3] ফ্যামিলি ডিএনএস (CleanBrowsing & Cloudflare) সক্রিয় করা হচ্ছে..." -ForegroundColor Cyan
     try {
-        # FIX #20: ভার্চুয়াল অ্যাডাপ্টার (WSL, Hyper-V, VMware) ফিল্টার করা
+        # FIX #20: ভার্চুয়াল অ্যাডাপ্টার বাদ দেওয়া
         $adapters = Get-NetAdapter | Where-Object {
             $_.Status -eq "Up" -and
             $_.InterfaceDescription -notmatch "Virtual|VMware|Hyper-V|Loopback|TAP|VPN|WSL|Tailscale|WireGuard|Docker"
@@ -105,9 +104,9 @@ function Install-ShuddhoProtection {
 function Restore-ShuddhoProtection {
     Write-Host "হোস্ট ফাইল এবং ডিএনএস পূর্বের অবস্থায় ফিরিয়ে নেওয়া হচ্ছে..." -ForegroundColor Yellow
 
-    # FIX #10(c): Scheduled Task মুছে ফেলা
+    # Scheduled Task মুছে ফেলা
     try {
-        schtasks /delete /f /tn "ShuddhoGuardProtection" 2>$null | Out-Null
+        schtasks.exe /delete /f /tn "ShuddhoGuardProtection" 2>&1 | Out-Null
         Write-Host "  ✓ Scheduled Task সরানো হয়েছে।" -ForegroundColor Green
     } catch {}
 
@@ -117,7 +116,6 @@ function Restore-ShuddhoProtection {
         Copy-Item $backupPath $hostsPath -Force
         Write-Host "  ✓ hosts ফাইল ব্যাকআপ থেকে রিস্টোর হয়েছে।" -ForegroundColor Green
     } else {
-        # ব্যাকআপ না থাকলে শুদ্ধ গার্ড ব্লকটি মুছে দেওয়া
         $raw = Get-Content $hostsPath -Raw -ErrorAction SilentlyContinue
         if ($raw) {
             $cleaned = [regex]::Replace(

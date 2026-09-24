@@ -13,7 +13,7 @@ import android.util.Log
 class AppInstallWatcher : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.Action_PACKAGE_ADDED) {
+        if (intent.action == Intent.ACTION_PACKAGE_ADDED) {
             val data = intent.data ?: return
             val packageName = data.schemeSpecificPart ?: return
 

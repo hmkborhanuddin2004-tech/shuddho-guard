@@ -6,3 +6,9 @@ puregram-core/
 *.log
 .DS_Store
 Thumbs.db
+android/.android-sdk/
+android/.gradle_dist/
+android/.jdk/
+android/local.properties
+android/app/build/
+android/.gradle/
