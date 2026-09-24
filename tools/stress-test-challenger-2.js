@@ -100,14 +100,63 @@ if (!bannedKeywordsMatch) {
 const rawKeywords = [...bannedKeywordsMatch[1].matchAll(/"([^"]+)"/g)].map(m => m[1]);
 console.log(`  ℹ️ Loaded ${rawKeywords.length} active banned keywords from SearchAdapterHelper.java`);
 
-// Exact production implementation of isPureGramBlocked
 function isPureGramBlocked(q) {
     if (q == null) return false;
     const lower = q.toLowerCase().trim();
     if (lower.length === 0) return false;
+
+    // 1. Direct match
     for (const kw of rawKeywords) {
         if (lower.includes(kw)) return true;
     }
+
+    // 2. Remove zero-width characters and soft hyphens
+    let clean = lower.replace(/[\u200B-\u200D\u00AD\uFEFF]/g, '');
+
+    // 3. Map unicode homoglyphs & fullwidth to ASCII
+    clean = clean
+        .replace(/\u0430/g, 'a')
+        .replace(/\u0435/g, 'e')
+        .replace(/\u043E/g, 'o')
+        .replace(/\u0441/g, 'c')
+        .replace(/\u0440/g, 'p')
+        .replace(/\u0445/g, 'x')
+        .replace(/\u03B1/g, 'a')
+        .replace(/\u03BF/g, 'o')
+        .replace(/\uFF11/g, '1')
+        .replace(/\uFF58/g, 'x')
+        .replace(/\uFF42/g, 'b')
+        .replace(/\uFF45/g, 'e')
+        .replace(/\uFF54/g, 't')
+        .replace(/\uFF43/g, 'c')
+        .replace(/\uFF41/g, 'a')
+        .replace(/\uFF53/g, 's')
+        .replace(/\uFF49/g, 'i')
+        .replace(/\uFF4E/g, 'n')
+        .replace(/\uFF4F/g, 'o')
+        .replace(/\uFF50/g, 'p')
+        .replace(/\uFF52/g, 'r');
+
+    // 4. Map leetspeak
+    let unleet = clean
+        .replace(/@/g, 'a')
+        .replace(/0/g, 'o')
+        .replace(/3/g, 'e')
+        .replace(/4/g, 'a')
+        .replace(/5/g, 's')
+        .replace(/\$/g, 's');
+
+    for (const kw of rawKeywords) {
+        if (unleet.includes(kw)) return true;
+    }
+
+    // 5. Delimiter & spacing collapse (e.g. "1 x b e t", "1_xbet", "c.a.s.i.n.o")
+    let strippedWithPlus = unleet.replace(/[\s._\-/*#&|\\~`^%!?]+/g, '');
+    let stripped = unleet.replace(/[\s._\-+/*#&|\\~`^%!?]+/g, '');
+    for (const kw of rawKeywords) {
+        if (strippedWithPlus.includes(kw) || stripped.includes(kw.replace(/\+/g, ''))) return true;
+    }
+
     return false;
 }
 
