@@ -22,7 +22,6 @@
   },
   "permissions": [
     "storage",
-    "declarativeNetRequest",
     "notifications"
   ],
   "host_permissions": [

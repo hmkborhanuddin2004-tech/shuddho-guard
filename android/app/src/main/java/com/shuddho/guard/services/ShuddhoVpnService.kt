@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.net.VpnService
 import android.os.Build
 import android.os.ParcelFileDescriptor
@@ -19,6 +20,15 @@ class ShuddhoVpnService : VpnService() {
     private var isRunning = false
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        // FIX #14: Android 8+ এ সার্ভিস যাতে কিল না হয় সেজন্য অবিলম্বে Foreground শুরু করা
+        createNotificationChannel()
+        val notification = createSilentNotification()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            startForeground(101, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+        } else {
+            startForeground(101, notification)
+        }
+
         if (!isRunning) {
             startVpnTunnel()
         }
@@ -27,9 +37,6 @@ class ShuddhoVpnService : VpnService() {
 
     private fun startVpnTunnel() {
         try {
-            createNotificationChannel()
-            startForeground(101, createSilentNotification())
-
             val builder = Builder()
                 .setSession("ShuddhoGuardShield")
                 .addAddress("10.1.10.1", 24)
@@ -38,10 +45,16 @@ class ShuddhoVpnService : VpnService() {
                 .addDnsServer("1.1.1.3")         // Cloudflare Family SafeSearch DNS
                 // ২. IPv6 ফ্যামিলি ডিএনএস
                 .addDnsServer("2606:4700:4700::1113")
-                // ৩. রাউটিং
+                // ৩. রাউটিং (FIX #14: DNS ট্রাফিক রাউটিং নিশ্চিতকরণ)
                 .addRoute("185.228.168.10", 32)
                 .addRoute("1.1.1.3", 32)
                 .setBlocking(true)
+
+            try {
+                builder.addRoute("2606:4700:4700::1113", 128)
+            } catch (e: Exception) {
+                // IPv6 সমর্থন না থাকলে সিস্টেম এড়িয়ে যাবে
+            }
 
             vpnInterface = builder.establish()
             isRunning = true

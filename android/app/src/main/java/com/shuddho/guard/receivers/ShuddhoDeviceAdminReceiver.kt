@@ -14,6 +14,13 @@ import android.widget.Toast
  */
 class ShuddhoDeviceAdminReceiver : DeviceAdminReceiver() {
 
+    companion object {
+        // FIX #15: SDK নামের সাথে ক্ল্যাশ এড়াতে getAdminComponentName হেল্পার
+        fun getAdminComponentName(context: Context): ComponentName {
+            return ComponentName(context, ShuddhoDeviceAdminReceiver::class.java)
+        }
+    }
+
     override fun onEnabled(context: Context, intent: Intent) {
         super.onEnabled(context, intent)
         Toast.makeText(context, "শুদ্ধ গার্ড: ডিভাইস সুরক্ষা প্রাচীর সক্রিয় হয়েছে", Toast.LENGTH_SHORT).show()
@@ -23,9 +30,24 @@ class ShuddhoDeviceAdminReceiver : DeviceAdminReceiver() {
         return "⚠️ সতর্কবার্তা! শুদ্ধ গার্ড নিষ্ক্রিয় করলে সমস্ত সুরক্ষার প্রাচীর ভেঙে যাবে। এটি কি আপনি নিশ্চিত?"
     }
 
+    // FIX #15: নিষ্ক্রিয় করা হলে সমস্ত আরোপিত রেস্ট্রিকশন প্রত্যাহার করা যাতে ডিভাইস আটকে না থাকে
     override fun onDisabled(context: Context, intent: Intent) {
         super.onDisabled(context, intent)
-        Toast.makeText(context, "সুরক্ষা নিষ্ক্রিয় করা হয়েছে", Toast.LENGTH_SHORT).show()
+        val dpm = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager
+        val adminComponent = getAdminComponentName(context)
+
+        try {
+            if (dpm != null && dpm.isDeviceOwnerApp(context.packageName)) {
+                dpm.clearUserRestriction(adminComponent, UserManager.DISALLOW_UNINSTALL_APPS)
+                dpm.clearUserRestriction(adminComponent, UserManager.DISALLOW_CONFIG_VPN)
+                dpm.clearUserRestriction(adminComponent, UserManager.DISALLOW_SAFE_BOOT)
+                dpm.clearUserRestriction(adminComponent, UserManager.DISALLOW_FACTORY_RESET)
+            }
+        } catch (e: Exception) {
+            // অনুমতি ইতিমধ্যে বাতিল হলে হ্যান্ডেল করা
+        }
+
+        Toast.makeText(context, "শুদ্ধ গার্ড: ডিভাইস সুরক্ষা নিষ্ক্রিয় করা হয়েছে", Toast.LENGTH_SHORT).show()
     }
 
     override fun onProfileProvisioningComplete(context: Context, intent: Intent) {
@@ -36,7 +58,7 @@ class ShuddhoDeviceAdminReceiver : DeviceAdminReceiver() {
 
     private fun applyDeviceOwnerRestrictions(context: Context) {
         val dpm = context.getSystemService(Context.DEVICE_POLICY_SERVICE) as? DevicePolicyManager ?: return
-        val adminComponent = ComponentName(context, ShuddhoDeviceAdminReceiver::class.java)
+        val adminComponent = getAdminComponentName(context)
 
         if (dpm.isDeviceOwnerApp(context.packageName)) {
             // ১. অ্যাপ আন-ইনস্টল বন্ধ করা

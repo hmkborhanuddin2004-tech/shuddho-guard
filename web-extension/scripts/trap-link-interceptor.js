@@ -18,9 +18,9 @@
 
     // ২. পর্নোগ্রাফি, চটি ও খোলামেলা আপত্তিকর ডোমেইন ও কি-ওয়ার্ড তালিকা
     const ADULT_DOMAINS = [
-        'pornhub', 'xvideos', 'xnxx', 'xhamster', 'stripchat', 'bongacams',
-        'chotikahini', 'banglachoti', 'deshiboudi', 'bdchoti', 'redwap', 'spankbang',
-        'brazzers', 'chaturbate', 'onlyfans', 'fapello', 'leakgirls', 'thothub'
+        'pornhub.com', 'xvideos.com', 'xnxx.com', 'xhamster.com', 'stripchat.com', 'bongacams.com',
+        'chotikahini.com', 'banglachoti.com', 'deshiboudi.com', 'bdchoti.net', 'redwap.me', 'spankbang.com',
+        'brazzers.com', 'chaturbate.com', 'onlyfans.com', 'fapello.com', 'leakgirls.com', 'thothub.to'
     ];
     const ADULT_KEYWORDS = [
         'choti', 'boudi', 'gopon', 'viral video', 'leaked', 'leak', '18+', 'সহবাস',
@@ -33,19 +33,67 @@
     const SHORTENER_DOMAINS = ['bit.ly', 'tinyurl.com', 'cutt.ly', 'is.gd', 't.co', 'rb.gy', 'shorturl.at'];
 
     /**
+     * FIX #11: নিরাপদ Hostname নিষ্কাশন
+     */
+    function extractHostname(rawUrl) {
+        if (!rawUrl) return '';
+        try {
+            const u = new URL(rawUrl, window.location.href);
+            return (u.hostname || '').toLowerCase();
+        } catch (e) {
+            return '';
+        }
+    }
+
+    /**
+     * FIX #11: সাবস্ট্রিং বাউন্ডারি সমস্যা ছাড়া সঠিক ডোমেইন ম্যাচিং
+     */
+    function hostMatches(hostname, pattern) {
+        if (!hostname || !pattern) return false;
+        hostname = hostname.toLowerCase().trim();
+        pattern = pattern.toLowerCase().trim();
+
+        // ১. ডাইরেক্ট হোস্ট বা সাবডোমেইন (যেমন t.me, sub.t.me, pornhub.com)
+        if (hostname === pattern || hostname.endsWith('.' + pattern)) {
+            return true;
+        }
+
+        // ২. ডট ছাড়া ব্র্যান্ড কী-ওয়ার্ড (যেমন 1win, 1xbet, babu88)
+        if (!pattern.includes('.')) {
+            const labels = hostname.split('.');
+            for (const label of labels) {
+                if (label === pattern) return true;
+                if (label.startsWith(pattern + '-') || label.startsWith(pattern + '_')) return true;
+                const digitsRegex = new RegExp(`^${pattern}[0-9]+$`);
+                if (digitsRegex.test(label)) return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * লিঙ্কটি ক্ষতিকারক কি না যাচাই করা এবং বিপদের ধরন শনাক্ত করা
      */
     function analyzeLinkRisk(anchor) {
         const href = (anchor.href || '').toLowerCase();
+        const hostname = extractHostname(href);
         const text = (anchor.innerText || '').toLowerCase();
         const parentElem = anchor.closest('div[role="article"], div[data-ad-preview="message"], .comment, div[dir="auto"], p, article');
         const parentText = (parentElem ? parentElem.innerText : '').toLowerCase();
         const combinedText = `${text} ${href} ${parentText}`;
 
-        // ক্যাটাগরি ১: অনলাইন জুয়া ও ক্যাসিনো
-        const isGamblingDomain = GAMBLING_DOMAINS.some(d => href.includes(d));
+        const isTelegramDomain = TELEGRAM_DOMAINS.some(d => hostMatches(hostname, d));
+        const isShortener = SHORTENER_DOMAINS.some(d => hostMatches(hostname, d));
+        const isGamblingDomain = GAMBLING_DOMAINS.some(d => hostMatches(hostname, d));
         const hasGamblingKeywords = GAMBLING_KEYWORDS.some(kw => combinedText.includes(kw));
-        if (isGamblingDomain || (hasGamblingKeywords && (isGamblingDomain || SHORTENER_DOMAINS.some(d => href.includes(d)) || TELEGRAM_DOMAINS.some(d => href.includes(d))))) {
+
+        // FIX #12: Adult Keywords সঠিকভাবে শনাক্ত ও ব্যবহার
+        const isAdultDomain = ADULT_DOMAINS.some(d => hostMatches(hostname, d));
+        const hasAdultKeywords = ADULT_KEYWORDS.some(kw => combinedText.includes(kw));
+
+        // ক্যাটাগরি ১: অনলাইন জুয়া ও ক্যাসিনো
+        if (isGamblingDomain || (hasGamblingKeywords && (isShortener || isTelegramDomain))) {
             return {
                 isHarmful: true,
                 category: 'অনলাইন জুয়া ও ক্যাসিনো ফাঁদ',
@@ -55,10 +103,8 @@
             };
         }
 
-        // ক্যাটাগরি ২: পর্নোগ্রাফি ও আপত্তিকর চটি সাইট
-        const isAdultDomain = ADULT_DOMAINS.some(d => href.includes(d));
-        const hasAdultKeywords = ADULT_KEYWORDS.some(kw => combinedText.includes(kw));
-        if (isAdultDomain) {
+        // ক্যাটাগরি ২: পর্নোগ্রাফি ও আপত্তিকর চটি সাইট (FIX #12: hasAdultKeywords সক্রিয়)
+        if (isAdultDomain || (hasAdultKeywords && (isShortener || isTelegramDomain || href.includes('video') || href.includes('watch')))) {
             return {
                 isHarmful: true,
                 category: 'পর্নোগ্রাফি ও প্রাপ্তবয়স্ক কনটেন্ট',
@@ -69,7 +115,6 @@
         }
 
         // ক্যাটাগরি ৩: সোশ্যাল মিডিয়ার টেলিগ্রাম হানি-ট্র্যাপ (ক্লিকবেট পোস্টের কমেন্টে চটি/ভিডিও লিংক)
-        const isTelegramDomain = TELEGRAM_DOMAINS.some(d => href.includes(d));
         if (isTelegramDomain) {
             const hasTrapSlug = ['leak', 'choti', 'boudi', 'viral', '18plus', 'casino', 'betting', 'gopon', 'mms'].some(slug => href.includes(slug));
             if (hasTrapSlug || hasAdultKeywords || hasGamblingKeywords) {
@@ -84,7 +129,6 @@
         }
 
         // ক্যাটাগরি ৪: শর্টনার দিয়ে লুকানো ক্ষতিকর লিঙ্ক
-        const isShortener = SHORTENER_DOMAINS.some(d => href.includes(d));
         if (isShortener && (hasAdultKeywords || hasGamblingKeywords)) {
             return {
                 isHarmful: true,
@@ -98,8 +142,13 @@
         return { isHarmful: false };
     }
 
-    // গ্লোবাল ক্লিক ইন্টারসেপ্টর — লিঙ্কে ক্লিক করার সাথে সাথে যাচাই
-    document.addEventListener('click', function(e) {
+    /**
+     * FIX #18: বাম ক্লিক ও মিডল-ক্লিক (auxclick) হ্যান্ডলার
+     */
+    function handleLinkInteraction(e) {
+        // শুধুমাত্র বাম ক্লিক (button 0) বা মিডল ক্লিক (button 1) পরীক্ষা
+        if (e.button !== 0 && e.button !== 1) return;
+
         const anchor = e.target.closest('a');
         if (!anchor) return;
 
@@ -109,8 +158,14 @@
             e.stopPropagation();
             showHarmfulLinkAlert(anchor.href, analysis);
         }
-    }, true);
+    }
 
+    document.addEventListener('click', handleLinkInteraction, true);
+    document.addEventListener('auxclick', handleLinkInteraction, true);
+
+    /**
+     * FIX #13: XSS-মুক্ত অ্যালার্ট মডাল (textContent ব্যবহার)
+     */
     function showHarmfulLinkAlert(targetUrl, risk) {
         const oldModal = document.getElementById('shuddho-trap-modal');
         if (oldModal) oldModal.remove();
@@ -147,7 +202,7 @@
                     ${risk.description}
                 </p>
                 <div style="background: #0F172A; padding: 12px; border-radius: 8px; font-size: 12px; color: #94A3B8; word-break: break-all; margin-bottom: 22px; border: 1px solid #334155;">
-                    🛑 অবরুদ্ধ গন্তব্য: <span style="color: #38BDF8;">${targetUrl}</span>
+                    🛑 অবরুদ্ধ গন্তব্য: <span id="shuddho-blocked-url" style="color: #38BDF8;"></span>
                 </div>
                 <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
                     <button id="shuddho-stay-safe-btn" style="background: #10B981; color: white; border: none; padding: 12px 28px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 15px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);">
@@ -161,6 +216,12 @@
         `;
 
         document.body.appendChild(modal);
+
+        // FIX #13: XSS রোধে textContent এর মাধ্যমে URL রেন্ডার করা
+        const urlSpan = document.getElementById('shuddho-blocked-url');
+        if (urlSpan) {
+            urlSpan.textContent = targetUrl || '';
+        }
 
         document.getElementById('shuddho-stay-safe-btn').addEventListener('click', function() {
             modal.remove();

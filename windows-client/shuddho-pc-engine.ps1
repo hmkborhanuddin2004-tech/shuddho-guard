@@ -8,16 +8,23 @@ $hostsPath = "$env:windir\System32\drivers\etc\hosts"
 $backupPath = "$env:windir\System32\drivers\etc\hosts.shuddho.bak"
 
 $safeSearchEntries = @(
+    # --- Google SafeSearch (forcesafesearch) ---
     "216.239.38.120 forcesafesearch.google.com",
     "216.239.38.120 www.google.com",
     "216.239.38.120 google.com",
     "216.239.38.120 www.google.com.bd",
+
+    # --- Bing Strict SafeSearch ---
     "204.79.197.220 strict.bing.com",
     "204.79.197.220 www.bing.com",
     "204.79.197.220 bing.com",
+
+    # --- YouTube Restricted Mode ---
     "216.239.38.119 restrict.youtube.com",
     "216.239.38.119 www.youtube.com",
-    "safe.duckduckgo.com duckduckgo.com"
+    "216.239.38.119 m.youtube.com",
+    "216.239.38.119 youtubei.googleapis.com",
+    "216.239.38.119 youtube.googleapis.com"
 )
 
 $blockedDomains = @(
@@ -45,30 +52,45 @@ function Install-ShuddhoProtection {
     $currentHosts = Get-Content $hostsPath -Raw -ErrorAction SilentlyContinue
     if (-not $currentHosts) { $currentHosts = "" }
 
+    # FIX #8: পূর্বের কোনো শুদ্ধ গার্ড ব্লক থাকলে তা প্রথমে মুছে ফেলে ডুপ্লিকেশন রোধ করা
+    $currentHosts = [regex]::Replace(
+        $currentHosts,
+        '(?ms)^[ \t]*# === SHUDDHO GUARD SAFE PROTECTION START ===.*?^[ \t]*# === SHUDDHO GUARD SAFE PROTECTION END ===[ \t]*\r?\n?',
+        ''
+    )
+
     $newEntries = New-Object System.Text.StringBuilder
     $newEntries.AppendLine($currentHosts.TrimEnd())
     $newEntries.AppendLine("`n# === SHUDDHO GUARD SAFE PROTECTION START ===")
 
     foreach ($entry in $safeSearchEntries) {
-        if ($currentHosts -notmatch [regex]::Escape($entry)) {
+        $pattern = '(?m)^[ \t]*' + [regex]::Escape($entry) + '[ \t]*$'
+        if ($currentHosts -notmatch $pattern) {
             $newEntries.AppendLine($entry)
         }
     }
 
     foreach ($domain in $blockedDomains) {
         $blockLine = "0.0.0.0 $domain"
-        if ($currentHosts -notmatch [regex]::Escape($blockLine)) {
+        $pattern = '(?m)^[ \t]*' + [regex]::Escape($blockLine) + '[ \t]*$'
+        if ($currentHosts -notmatch $pattern) {
             $newEntries.AppendLine($blockLine)
         }
     }
     $newEntries.AppendLine("# === SHUDDHO GUARD SAFE PROTECTION END ===")
 
-    Set-Content -Path $hostsPath -Value $newEntries.ToString() -Encoding UTF8
-    try { Set-ItemProperty -Path $hostsPath -Name IsReadOnly -Value $true -ErrorAction SilentlyContinue } catch {}
+    # FIX #10(a): UTF-8 BOM ছাড়া ASCII ফরম্যাটে সেভ (উইন্ডোজ হোস্ট পার্সার সুরক্ষা)
+    [System.IO.File]::WriteAllText($hostsPath, $newEntries.ToString(), [System.Text.Encoding]::ASCII)
+
+    # FIX #10(b): IsReadOnly true পরিহার (অন্যান্য সিকিউরিটি সফটওয়্যার ও ভিপিএন সুরক্ষা)
 
     Write-Host "[3/3] ফ্যামিলি ডিএনএস (CleanBrowsing & Cloudflare) সক্রিয় করা হচ্ছে..." -ForegroundColor Cyan
     try {
-        $adapters = Get-NetAdapter | Where-Object { $_.Status -eq "Up" }
+        # FIX #20: ভার্চুয়াল অ্যাডাপ্টার (WSL, Hyper-V, VMware) ফিল্টার করা
+        $adapters = Get-NetAdapter | Where-Object {
+            $_.Status -eq "Up" -and
+            $_.InterfaceDescription -notmatch "Virtual|VMware|Hyper-V|Loopback|TAP|VPN|WSL|Tailscale|WireGuard|Docker"
+        }
         foreach ($adapter in $adapters) {
             Set-DnsClientServerAddress -InterfaceIndex $adapter.InterfaceIndex -ServerAddresses ("185.228.168.10", "1.1.1.3") -ErrorAction SilentlyContinue
         }
@@ -82,17 +104,41 @@ function Install-ShuddhoProtection {
 
 function Restore-ShuddhoProtection {
     Write-Host "হোস্ট ফাইল এবং ডিএনএস পূর্বের অবস্থায় ফিরিয়ে নেওয়া হচ্ছে..." -ForegroundColor Yellow
+
+    # FIX #10(c): Scheduled Task মুছে ফেলা
+    try {
+        schtasks /delete /f /tn "ShuddhoGuardProtection" 2>$null | Out-Null
+        Write-Host "  ✓ Scheduled Task সরানো হয়েছে।" -ForegroundColor Green
+    } catch {}
+
     try { Set-ItemProperty -Path $hostsPath -Name IsReadOnly -Value $false -ErrorAction SilentlyContinue } catch {}
 
     if (Test-Path $backupPath) {
         Copy-Item $backupPath $hostsPath -Force
+        Write-Host "  ✓ hosts ফাইল ব্যাকআপ থেকে রিস্টোর হয়েছে।" -ForegroundColor Green
+    } else {
+        # ব্যাকআপ না থাকলে শুদ্ধ গার্ড ব্লকটি মুছে দেওয়া
+        $raw = Get-Content $hostsPath -Raw -ErrorAction SilentlyContinue
+        if ($raw) {
+            $cleaned = [regex]::Replace(
+                $raw,
+                '(?ms)^[ \t]*# === SHUDDHO GUARD SAFE PROTECTION START ===.*?^[ \t]*# === SHUDDHO GUARD SAFE PROTECTION END ===[ \t]*\r?\n?',
+                ''
+            )
+            [System.IO.File]::WriteAllText($hostsPath, $cleaned, [System.Text.Encoding]::ASCII)
+            Write-Host "  ✓ hosts থেকে শুদ্ধ গার্ড রুলস সরানো হয়েছে।" -ForegroundColor Green
+        }
     }
 
     try {
-        $adapters = Get-NetAdapter | Where-Object { $_.Status -eq "Up" }
+        $adapters = Get-NetAdapter | Where-Object {
+            $_.Status -eq "Up" -and
+            $_.InterfaceDescription -notmatch "Virtual|VMware|Hyper-V|Loopback|TAP|VPN|WSL|Tailscale|WireGuard|Docker"
+        }
         foreach ($adapter in $adapters) {
             Set-DnsClientServerAddress -InterfaceIndex $adapter.InterfaceIndex -ResetServerAddresses -ErrorAction SilentlyContinue
         }
+        Write-Host "  ✓ DNS স্বাভাবিক অবস্থায় ফিরিয়ে আনা হয়েছে।" -ForegroundColor Green
     } catch {}
 
     Clear-DnsClientCache -ErrorAction SilentlyContinue

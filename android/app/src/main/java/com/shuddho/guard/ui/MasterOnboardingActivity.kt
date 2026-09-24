@@ -35,7 +35,7 @@ class MasterOnboardingActivity : Activity() {
 
     private fun startOneClickLockdown() {
         // ১. ডিভাইস অ্যাডমিন পারমিশন রিকোয়েস্ট
-        val adminComponent = ComponentName(this, ShuddhoDeviceAdminReceiver::class.java)
+        val adminComponent = ShuddhoDeviceAdminReceiver.getAdminComponentName(this)
         val dpm = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         if (!dpm.isAdminActive(adminComponent)) {
             val intent = Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
