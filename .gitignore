@@ -2,6 +2,7 @@ node_modules/
 .gradle/
 build/
 app/build/
+puregram-core/
 *.log
 .DS_Store
 Thumbs.db
