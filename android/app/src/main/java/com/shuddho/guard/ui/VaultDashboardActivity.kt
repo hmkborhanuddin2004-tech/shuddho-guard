@@ -22,7 +22,15 @@ class VaultDashboardActivity : Activity() {
         val tvStatus = findViewById<TextView>(R.id.tvSystemStatus)
         val btnPanic = findViewById<Button>(R.id.btnEmergencyFocus)
 
-        tvStatus.text = "🛡️ সিস্টেম স্ট্যাটাস: ১০০% লৌহকঠিন সুরক্ষিত"
+        // ডিভাইস ওনার পলিসি এনফোর্সমেন্ট রি-চেক
+        com.shuddho.guard.receivers.ShuddhoDeviceAdminReceiver.applyDeviceOwnerRestrictions(this)
+        com.shuddho.guard.services.NetworkWatchdogService.startWatchdog(this)
+
+        val prefs = getSharedPreferences("shuddho_shield", Context.MODE_PRIVATE)
+        val blockedVpnCount = prefs.getInt(com.shuddho.guard.receivers.AppInstallWatcher.KEY_BLOCKED_PACKAGES_COUNT, 0)
+        val bypassAttempts = prefs.getInt(com.shuddho.guard.services.NetworkWatchdogService.KEY_BYPASS_ATTEMPTS, 0)
+
+        tvStatus.text = "🛡️ সিস্টেম স্ট্যাটাস: ১০০% লৌহকঠিন সুরক্ষিত (ব্লককৃত ভিপিএন: $blockedVpnCount, বাইপাস রোধ: $bypassAttempts)"
         tvStreak.text = "১৪ দিন" // ডেমো স্ট্রিক
 
         btnPanic.setOnClickListener {

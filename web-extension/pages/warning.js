@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetUrl = urlParams.get('url') || urlParams.get('target') || 'https://t.me/suspicious_trap_link';
     const reason = urlParams.get('reason') || 'honey_trap';
 
-    const urlDisplay = document.getElementById('blocked-target-url');
+    const urlDisplay = document.getElementById('blocked-target-url') || document.getElementById('targetUrl');
     if (urlDisplay) {
-        urlDisplay.textContent = targetUrl;
+        urlDisplay.textContent = '🛑 অবরুদ্ধ গন্তব্য: ' + decodeURIComponent(targetUrl);
     }
 
     // পরিসংখ্যান আপডেট (Storage)
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ব্যাকগ্রাউন্ড ওয়ার্কারে বার্তা প্রেরণ
     if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
         try {
-            chrome.runtime.sendMessage({ action: 'trapBlocked', url: targetUrl });
+            chrome.runtime.sendMessage({ action: 'trap_blocked', url: targetUrl, reason: reason });
         } catch (e) {
             // Service worker inactive or direct page open
         }
@@ -60,8 +60,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         url: targetUrl,
-                        category: 'honey-trap',
-                        platform: 'facebook',
+                        category: reason || 'honey-trap',
+                        platform: 'web',
                         reportedBy: 'shuddho-extension-warning'
                     })
                 });
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     try {
                         chrome.runtime.sendMessage({
                             action: 'reportTrap',
-                            data: { url: targetUrl, category: 'honey-trap' }
+                            data: { url: targetUrl, category: reason || 'honey-trap' }
                         });
                         reportSuccess = true;
                     } catch (e) {}

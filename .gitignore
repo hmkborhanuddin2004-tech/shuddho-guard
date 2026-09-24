@@ -12,3 +12,5 @@ android/.jdk/
 android/local.properties
 android/app/build/
 android/.gradle/
+
+tools/upload-apk.cjs

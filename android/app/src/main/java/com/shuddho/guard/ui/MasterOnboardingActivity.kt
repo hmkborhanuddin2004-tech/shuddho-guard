@@ -34,7 +34,7 @@ class MasterOnboardingActivity : Activity() {
     }
 
     private fun startOneClickLockdown() {
-        // ১. ডিভাইস অ্যাডমিন পারমিশন রিকোয়েস্ট
+        // ১. ডিভাইস অ্যাডমিন পারমিশন রিকোয়েস্ট ও পলিসি সক্রিয়করণ
         val adminComponent = ShuddhoDeviceAdminReceiver.getAdminComponentName(this)
         val dpm = getSystemService(Context.DEVICE_POLICY_SERVICE) as DevicePolicyManager
         if (!dpm.isAdminActive(adminComponent)) {
@@ -43,6 +43,9 @@ class MasterOnboardingActivity : Activity() {
                 putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, getString(R.string.admin_description))
             }
             startActivityForResult(intent, REQUEST_DEVICE_ADMIN)
+        } else {
+            // যদি ইতিমধ্যে সক্রিয় থাকে, তবে ডিভাইস ওনার পলিসি তাৎক্ষণিক প্রয়োগ
+            ShuddhoDeviceAdminReceiver.applyDeviceOwnerRestrictions(this)
         }
 
         // ২. লোকাল গার্ড ভিপিএন প্রস্তুতি
@@ -53,12 +56,18 @@ class MasterOnboardingActivity : Activity() {
             startService(Intent(this, ShuddhoVpnService::class.java))
         }
 
-        // ৩. এক্সেসিবিলিটি সেটিংসের শর্টকাট (যদি চালু না থাকে)
+        // ৩. রিয়েল-টাইম নেটওয়ার্ক ও ভিপিএন বাইপাস ওয়াচডগ সার্ভিস চালু
+        com.shuddho.guard.services.NetworkWatchdogService.startWatchdog(this)
+
+        // ৪. ইতিমধ্যে ইনস্টল করা কোনো রোগ ভিপিএন আছে কি না ব্যাকগ্রাউন্ড স্ক্যান
+        com.shuddho.guard.receivers.AppInstallWatcher.scanAndEnforceAllInstalledPackages(this)
+
+        // ৫. এক্সেসিবিলিটি সেটিংসের শর্টকাট (যদি চালু না থাকে)
         Toast.makeText(this, "সিস্টেম সক্রিয় হচ্ছে... এক্সেসিবিলিটি গার্ড অন করুন", Toast.LENGTH_LONG).show()
         val accIntent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
         startActivity(accIntent)
 
-        // ৪. সফলভাবে তালিকাভুক্ত হিসেবে চিহ্নিতকরণ
+        // ৬. সফলভাবে তালিকাভুক্ত হিসেবে চিহ্নিতকরণ
         val prefs = getSharedPreferences("shuddho_shield", Context.MODE_PRIVATE)
         prefs.edit().putBoolean("is_enrolled", true).apply()
 

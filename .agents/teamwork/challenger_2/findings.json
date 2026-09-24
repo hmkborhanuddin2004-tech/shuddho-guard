@@ -1,0 +1,267 @@
+{
+  "timestamp": "2026-09-24T13:15:55.903Z",
+  "totalAttacks": 142,
+  "mitigatedAttacks": 99,
+  "vulnerableAttacks": 43,
+  "robustnessRate": "69.7%",
+  "findings": [
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1 x b e t\" (Spacing)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1  x  b  e  t\" (Spacing)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"c a s i n o\" (Spacing)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"b a b u 8 8\" (Spacing)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"p o r n\" (Spacing)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"c h o t i\" (Spacing)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1 8 +\" (Spacing)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1_xbet\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1-xbet\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1.xbet\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1/xbet\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1+xbet\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1*xbet\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"c.a.s.i.n.o\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"c_a_s_i_n_o\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"c-a-s-i-n-o\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"b-a-b-u-8-8\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"p.o.r.n\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"s_e_x\" (Delimiter)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"cаsino\" (Homoglyph)",
+      "detail": "Bypassed naive substring match! Note: Cyrillic a (U+0430)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1xbеt\" (Homoglyph)",
+      "detail": "Bypassed naive substring match! Note: Cyrillic e (U+0435)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"mеlbеt\" (Homoglyph)",
+      "detail": "Bypassed naive substring match! Note: Cyrillic e (U+0435)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"pоrn\" (Homoglyph)",
+      "detail": "Bypassed naive substring match! Note: Cyrillic o (U+043E)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"chоti\" (Homoglyph)",
+      "detail": "Bypassed naive substring match! Note: Cyrillic o (U+043E)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"хxx\" (Homoglyph)",
+      "detail": "Bypassed naive substring match! Note: Cyrillic x (U+0445)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"рorn\" (Homoglyph)",
+      "detail": "Bypassed naive substring match! Note: Cyrillic r (U+0440)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"сasino\" (Homoglyph)",
+      "detail": "Bypassed naive substring match! Note: Cyrillic s (U+0441)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"pοrn\" (Homoglyph)",
+      "detail": "Bypassed naive substring match! Note: Greek omicron (U+03BF)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"cαsino\" (Homoglyph)",
+      "detail": "Bypassed naive substring match! Note: Greek alpha (U+03B1)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"１ｘｂｅｔ\" (Fullwidth)",
+      "detail": "Bypassed naive substring match! Note: Fullwidth １ｘｂｅｔ",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"ｃａｓｉｎｏ\" (Fullwidth)",
+      "detail": "Bypassed naive substring match! Note: Fullwidth ｃａｓｉｎｏ",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"ｐｏｒｎ\" (Fullwidth)",
+      "detail": "Bypassed naive substring match! Note: Fullwidth ｐｏｒｎ",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1​x​b​e​t\" (ZeroWidth)",
+      "detail": "Bypassed naive substring match! Note: Zero-width space (U+200B)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"c‌a‌s‌i‌n‌o\" (ZeroWidth)",
+      "detail": "Bypassed naive substring match! Note: Zero-width non-joiner (U+200C)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"p‍o‍r‍n\" (ZeroWidth)",
+      "detail": "Bypassed naive substring match! Note: Zero-width joiner (U+200D)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1­xbet\" (ZeroWidth)",
+      "detail": "Bypassed naive substring match! Note: Soft hyphen (U+00AD)",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"1xb3t\" (Leetspeak)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"c@sino\" (Leetspeak)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"c4sino\" (Leetspeak)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"p0rn\" (Leetspeak)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"b4bu88\" (Leetspeak)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"5ex\" (Leetspeak)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    },
+    {
+      "suite": "SearchClassifier",
+      "testName": "Classifier evaded by: \"s3x\" (Leetspeak)",
+      "detail": "Bypassed naive substring match! Note: No notes",
+      "findingType": "CLASSIFIER_EVASION"
+    }
+  ]
+}

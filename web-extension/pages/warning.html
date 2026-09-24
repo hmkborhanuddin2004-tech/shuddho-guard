@@ -12,7 +12,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             padding: 20px;
         }
         .card {
@@ -20,27 +20,35 @@
             border: 2px solid #EF4444;
             border-radius: 16px;
             padding: 40px;
-            max-width: 520px;
+            max-width: 540px;
+            width: 100%;
             text-align: center;
             box-shadow: 0 25px 50px -12px rgba(239, 68, 68, 0.4);
         }
         .icon { font-size: 64px; margin-bottom: 16px; }
-        h1 { color: #F87171; font-size: 24px; margin-bottom: 14px; }
+        h1 { color: #F87171; font-size: 24px; margin-bottom: 14px; font-weight: bold; }
         p { color: #94A3B8; font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
         .target-url {
             background: #0F172A;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             font-family: monospace;
             font-size: 13px;
             color: #38BDF8;
             word-break: break-all;
             margin-bottom: 24px;
+            border: 1px solid #334155;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         .btn {
             background: #10B981;
             color: white;
-            padding: 12px 28px;
+            padding: 12px 24px;
             border-radius: 8px;
             font-weight: bold;
             font-size: 15px;
@@ -48,10 +56,34 @@
             cursor: pointer;
             transition: 0.2s;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         .btn:hover { background: #059669; }
-        .footer { margin-top: 20px; font-size: 12px; color: #64748B; }
+        .btn-secondary {
+            background: #475569;
+        }
+        .btn-secondary:hover {
+            background: #334155;
+        }
+        .reported {
+            background: #059669 !important;
+            cursor: default !important;
+        }
+        .toast {
+            display: none;
+            margin-top: 18px;
+            padding: 12px;
+            background: #065F46;
+            border: 1px solid #10B981;
+            border-radius: 8px;
+            color: #ECFDF5;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .footer { margin-top: 24px; font-size: 12px; color: #64748B; }
     </style>
 </head>
 <body>
@@ -59,18 +91,16 @@
         <div class="icon">🚨</div>
         <h1>বিপজ্জনক ফাঁদ ব্লক করা হয়েছে!</h1>
         <p>
-            আপনি যে লিঙ্কটিতে প্রবেশের চেষ্টা করছিলেন, সেটি একটি সামাজিক মাধ্যমে প্রতারণামূলক পোস্টের মাধ্যমে ছড়িয়ে পড়া অশ্লীল বা ক্ষতিকর টেলিগ্রাম চ্যানেলের সংযোগ।
+            আপনি যে লিঙ্কটিতে প্রবেশের চেষ্টা করছিলেন, সেটি একটি সামাজিক মাধ্যমে প্রতারণামূলক পোস্টের মাধ্যমে ছড়িয়ে পড়া অশ্লীল বা ক্ষতিকর ফাঁদের সংযোগ। শুদ্ধ গার্ড আপনার নিরাপত্তা বজায় রাখতে এটি প্রতিহত করেছে।
         </p>
-        <div id="targetUrl" class="target-url">অনিরাপদ সংযোগ প্রতিহত করা হয়েছে</div>
-        <a href="javascript:history.back()" class="btn">নিরাপদে ফিরে যান</a>
-        <div class="footer">🛡️ শুদ্ধ গার্ড (Shuddho Guard) সার্বক্ষণিক আপনার পাহারায় নিয়োজিত।</div>
+        <div id="blocked-target-url" class="target-url">অনিরাপদ সংযোগ প্রতিহত করা হয়েছে</div>
+        <div class="btn-group">
+            <button id="btn-go-back" class="btn">🛡️ নিরাপদে ফিরে যান</button>
+            <button id="btn-report-trap" class="btn btn-secondary">🚩 ফাঁদটি রিপোর্ট করুন</button>
+        </div>
+        <div id="toast-message" class="toast"></div>
+        <div class="footer">🛡️ শুদ্ধ গার্ড (Shuddho Guard) সার্বক্ষণিক আপনার আর্থিক ও নৈতিক পাহারায় নিয়োজিত।</div>
     </div>
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const url = params.get('url');
-        if (url) {
-            document.getElementById('targetUrl').textContent = '🔗 লক্ষ্য: ' + decodeURIComponent(url);
-        }
-    </script>
+    <script src="warning.js"></script>
 </body>
 </html>

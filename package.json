@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "শুদ্ধ গার্ড — অল-ইন-ওয়ান সাইবার নিরাপত্তা ও অ্যান্টি-পর্নোগ্রাফি সিস্টেম",
   "scripts": {
-    "test": "node tools/test-banglish-filter.js && node tools/test-trap-detector.js && node backend/test-backend.js",
-    "test:banglish": "node tools/test-banglish-filter.js",
+    "test": "node tools/run-all-tests.js",
+    "test:all": "node tools/run-all-tests.js",
+    "test:gradle": "cd android && gradlew.bat test",
     "test:trap": "node tools/test-trap-detector.js",
+    "test:puregram": "node tools/verify-puregram-integrity.js",
+    "test:nsfw": "node tools/test-nsfw-blur-engine.js",
+    "test:watchdog": "node tools/test-device-admin-watchdog.js",
+    "test:banglish": "node tools/test-banglish-filter.js",
     "test:backend": "node backend/test-backend.js",
     "start:backend": "node backend/server.js",
     "start:pc": "node windows-client/shuddho-pc-guard.js"

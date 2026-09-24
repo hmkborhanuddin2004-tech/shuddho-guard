@@ -16,6 +16,20 @@ import android.util.Log
  */
 class ShuddhoVpnService : VpnService() {
 
+    companion object {
+        private const val TAG = "ShuddhoVpnService"
+
+        @Volatile
+        var isShuddhoVpnActive: Boolean = false
+            private set
+
+        @Volatile
+        var vpnEstablishedTimestamp: Long = 0
+            private set
+
+        fun isVpnRunning(): Boolean = isShuddhoVpnActive
+    }
+
     private var vpnInterface: ParcelFileDescriptor? = null
     private var isRunning = false
 
@@ -58,6 +72,8 @@ class ShuddhoVpnService : VpnService() {
 
             vpnInterface = builder.establish()
             isRunning = true
+            isShuddhoVpnActive = true
+            vpnEstablishedTimestamp = System.currentTimeMillis()
             Log.i("ShuddhoGuard", "🛡️ লোকাল গার্ড ভিপিএন সফলভাবে সক্রিয় হয়েছে।")
 
         } catch (e: Exception) {
@@ -71,6 +87,7 @@ class ShuddhoVpnService : VpnService() {
         vpnInterface?.close()
         vpnInterface = null
         isRunning = false
+        isShuddhoVpnActive = false
     }
 
     private fun createNotificationChannel() {
@@ -87,6 +104,7 @@ class ShuddhoVpnService : VpnService() {
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun createSilentNotification(): Notification {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Notification.Builder(this, "shuddho_guard_channel")
@@ -106,5 +124,6 @@ class ShuddhoVpnService : VpnService() {
         vpnInterface?.close()
         vpnInterface = null
         isRunning = false
+        isShuddhoVpnActive = false
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.shuddho.guard">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- ইন্টারনেটের রুট ফিল্টারিং ও লোকাল ভিপিএন পারমিশন -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -92,15 +91,30 @@
             </intent-filter>
         </receiver>
 
-        <!-- ৪. নতুন অ্যাপ ইনস্টল রিসিভার (ছদ্মবেশী ভিপিএন স্বয়ংক্রিয় শনাক্তকরণ) -->
+        <!-- ৪. নতুন অ্যাপ ইনস্টল রিসিভার (ছদ্মবেশী ভিপিএন স্বয়ংক্রিয় শনাক্তকরণ ও রিবুট স্ক্যান) -->
         <receiver
             android:name=".receivers.AppInstallWatcher"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED" />
                 <data android:scheme="package" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
         </receiver>
+
+        <!-- ৫. রিয়েল-টাইম নেটওয়ার্ক ইন্টারফেস ও ভিপিএন বাইপাস ওয়াচডগ সার্ভিস -->
+        <service
+            android:name=".services.NetworkWatchdogService"
+            android:foregroundServiceType="specialUse"
+            android:exported="false">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Real-time Network Interface and Rogue VPN Bypass Watchdog" />
+        </service>
 
     </application>
 
