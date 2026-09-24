@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>শুদ্ধ গার্ড (Shuddho Guard) — অল-ইন-ওয়ান মাস্টার সিমুলেটর</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; }
+        body { background: #0B0F19; color: #E2E8F0; padding: 24px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        h1 { color: #38BDF8; font-size: 28px; margin-bottom: 6px; text-align: center; }
+        p.subtitle { color: #94A3B8; margin-bottom: 28px; font-size: 15px; text-align: center; max-width: 700px; }
+        
+        .main-grid { display: grid; grid-template-columns: 360px 1fr; gap: 32px; max-width: 1240px; width: 100%; }
+        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+
+        /* ফোন ফ্রেম */
+        .phone-mockup {
+            width: 360px; height: 720px; background: #17171C; border-radius: 44px; border: 8px solid #334155;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8); overflow: hidden; display: flex; flex-direction: column; position: relative; margin: 0 auto;
+        }
+        .phone-notch { width: 130px; height: 22px; background: #334155; margin: 0 auto; border-bottom-left-radius: 14px; border-bottom-right-radius: 14px; }
+        .screen { flex: 1; padding: 18px; display: flex; flex-direction: column; overflow-y: auto; }
+
+        /* ক্যালকুলেটর UI */
+        .calc-screen { display: flex; flex-direction: column; height: 100%; }
+        .calc-display { flex: 1; display: flex; align-items: flex-end; justify-content: flex-end; font-size: 48px; font-weight: bold; color: #FFF; padding: 15px; word-break: break-all; }
+        .calc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 10px; }
+        .calc-btn {
+            background: #2E2F3E; color: white; border: none; font-size: 22px; font-weight: bold; height: 60px;
+            border-radius: 50%; cursor: pointer; transition: 0.1s; display: flex; align-items: center; justify-content: center;
+        }
+        .calc-btn:active { transform: scale(0.92); opacity: 0.8; }
+        .calc-btn.op { background: #4B5EAA; }
+        .calc-btn.action { background: #D4D4D2; color: black; }
+        .calc-btn.equals { background: #10B981; }
+
+        /* কার্ড ও টেস্ট ল্যাব */
+        .panel-container { display: flex; flex-direction: column; gap: 20px; }
+        .card { background: #1E293B; border-radius: 16px; padding: 20px; border: 1px solid #334155; }
+        .card h2 { color: #38BDF8; font-size: 18px; margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+        .btn { padding: 10px 18px; background: #059669; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 14px; }
+        .btn:hover { background: #10B981; }
+        .btn-danger { background: #DC2626; }
+        .btn-danger:hover { background: #EF4444; }
+        .btn-bkash { background: #D12053; }
+        .btn-bkash:hover { background: #E2136E; }
+
+        /* ফেসবুক সিমুলেটর */
+        .fb-post { background: #18191A; border: 1px solid #3A3B3C; border-radius: 12px; padding: 14px; color: #E4E6EB; margin-top: 10px; }
+        .fb-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .fb-avatar { width: 40px; height: 40px; border-radius: 50%; background: #3A3B3C; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .fb-media-container { position: relative; width: 100%; height: 200px; border-radius: 8px; overflow: hidden; margin: 10px 0; background: #242526; display: flex; align-items: center; justify-content: center; }
+        .fb-image { width: 100%; height: 100%; object-fit: cover; }
+        .blurred { filter: blur(35px); transition: 0.3s; }
+        .blur-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.6); color: #38BDF8; font-weight: bold; font-size: 13px; text-align: center; padding: 10px; }
+        
+        .fb-comment-box { background: #242526; padding: 10px; border-radius: 8px; margin-top: 8px; font-size: 13px; }
+        .fb-trap-link { color: #58A6FF; text-decoration: underline; cursor: pointer; font-weight: bold; }
+
+        .log-box { background: #070A13; border-radius: 8px; padding: 12px; height: 140px; overflow-y: auto; font-family: monospace; font-size: 12px; color: #38BDF8; border: 1px solid #1E293B; line-height: 1.5; }
+        .hidden { display: none !important; }
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        .badge-green { background: #065F46; color: #34D399; }
+        .badge-red { background: #7F1D1D; color: #F87171; }
+    </style>
+</head>
+<body>
+
+    <h1>🛡️ শুদ্ধ গার্ড (Shuddho Guard) টেস্ট ল্যাব ও সিমুলেটর</h1>
+    <p class="subtitle">বোরহান উদ্দিন ভাই, এটি কোনো সাধারণ ওয়েবসাইট নয় — এটি হলো আমাদের তৈরি করা ৩টি সিস্টেম (অ্যান্ড্রয়েড অ্যাপ, ক্রোম এক্সটেনশন ও উইন্ডোজ গার্ড) কীভাবে কাজ করবে তা লাইভ পরখ করার ইন্টারেক্টিভ ল্যাব।</p>
+
+    <!-- ব্যাখ্যামূলক গাইড ব্যানার -->
+    <div style="background: linear-gradient(135deg, #1E293B, #0F172A); border: 2px solid #38BDF8; border-radius: 14px; padding: 16px 20px; max-width: 1240px; width: 100%; margin-bottom: 24px; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.15);">
+        <div style="display: flex; align-items: flex-start; gap: 14px;">
+            <div style="font-size: 30px;">💡</div>
+            <div style="font-size: 14px; line-height: 1.7; color: #E2E8F0;">
+                <b style="color: #38BDF8; font-size: 16px;">কেন এই পেজটি আপনার কাছে অদ্ভুত মনে হয়েছে?</b><br>
+                ১. <b>বাম পাশের ক্যালকুলেটর:</b> এটি আমাদের অ্যান্ড্রয়েড মোবাইল অ্যাপের ছদ্মবেশী রূপ। আসল ভল্ট খুলতে <b>1234=</b> চাপতে হয় (নিচের সবুজ বাটনে ক্লিক করলেই দেখতে পাবেন)।<br>
+                ২. <b>ডান পাশের ফেসবুক পোস্ট:</b> এটি ফেসবুকের একটা নকল ডেমো পোস্ট। সেখানে টেলিগ্রাম ফাঁদ লিংকে ক্লিক করলে শুদ্ধ গার্ড কীভাবে সাথে সাথে লাল সংকেত দিয়ে আটকে দেয় তা বোঝানো হয়েছে।<br>
+                ৩. <b>আসল সফটওয়্যার কোথায়?</b> আসল সফটওয়্যার আপনার কম্পিউটারের ফোল্ডারে রেডি: ক্রোম এক্সটেনশন, উইন্ডোজ ১৮+ সাইট ব্লকার ও অ্যান্ড্রয়েড অ্যাপ।
+            </div>
+        </div>
+    </div>
+
+    <div class="main-grid">
+        
+        <!-- বাঁ দিকের কলাম: মোবাইল ফোন সিমুলেশন -->
+        <div>
+            <div class="phone-mockup">
+                <div class="phone-notch"></div>
+                
+                <!-- স্ক্রিন ১: ছদ্মবেশী ক্যালকুলেটর -->
+                <div id="screenCalc" class="screen calc-screen">
+                    <div style="background: #1E293B; border-radius: 8px; padding: 8px; text-align: center; margin-bottom: 8px;">
+                        <span style="font-size: 11px; color: #F59E0B; font-weight: bold;">গোপন পিন: 1234=</span>
+                        <button onclick="autoFillPin()" style="display: block; width: 100%; margin-top: 5px; background: #059669; border: none; color: white; padding: 5px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer;">👉 এক ক্লিকে ভল্ট আনলক করুন</button>
+                    </div>
+                    <div id="calcDisplay" class="calc-display">0</div>
+                    <div class="calc-grid">
+                        <button class="calc-btn action" onclick="pressCalc('C')">C</button>
+                        <button class="calc-btn action" onclick="pressCalc('+/-')">±</button>
+                        <button class="calc-btn action" onclick="pressCalc('%')">%</button>
+                        <button class="calc-btn op" onclick="pressCalc('/')">÷</button>
+
+                        <button class="calc-btn" onclick="pressCalc('7')">7</button>
+                        <button class="calc-btn" onclick="pressCalc('8')">8</button>
+                        <button class="calc-btn" onclick="pressCalc('9')">9</button>
+                        <button class="calc-btn op" onclick="pressCalc('*')">×</button>
+
+                        <button class="calc-btn" onclick="pressCalc('4')">4</button>
+                        <button class="calc-btn" onclick="pressCalc('5')">5</button>
+                        <button class="calc-btn" onclick="pressCalc('6')">6</button>
+                        <button class="calc-btn op" onclick="pressCalc('-')">−</button>
+
+                        <button class="calc-btn" onclick="pressCalc('1')">1</button>
+                        <button class="calc-btn" onclick="pressCalc('2')">2</button>
+                        <button class="calc-btn" onclick="pressCalc('3')">3</button>
+                        <button class="calc-btn op" onclick="pressCalc('+')">+</button>
+
+                        <button class="calc-btn" style="grid-column: span 2; border-radius: 30px; width: 100%; justify-content: flex-start; padding-left: 24px;" onclick="pressCalc('0')">0</button>
+                        <button class="calc-btn" onclick="pressCalc('.')">.</button>
+                        <button class="calc-btn equals" onclick="pressCalc('=')">=</button>
+                    </div>
+                </div>
+
+                <!-- স্ক্রিন ২: ১-ক্লিক মাস্টার লকডাউন চুক্তিপত্র -->
+                <div id="screenOnboarding" class="screen hidden" style="background: #0F172A;">
+                    <div style="text-align: center; margin-top: 15px;">
+                        <span style="font-size: 36px;">🛡️</span>
+                        <h3 style="color: #38BDF8; font-size: 19px; margin-top: 6px;">শুদ্ধ গার্ড ডিজিটাল চুক্তি</h3>
+                        <p style="font-size: 12px; color: #94A3B8;">মোবাইল-অনলি অপ্রতিরোধ্য সুরক্ষা</p>
+                    </div>
+
+                    <div style="background: #1E293B; border-radius: 12px; padding: 14px; margin: 16px 0; font-size: 12px; line-height: 1.7;">
+                        <div>✅ <b>সেফ সার্চ ও পর্ন ব্লকার:</b> অলওয়েজ-অন ডিএনএস শিল্ড</div>
+                        <div>✅ <b>টেলিগ্রাম স্ক্রিন গার্ড:</b> চটি/খারাপ সার্চে তাৎক্ষণিক শাটডাউন</div>
+                        <div>✅ <b>ভিপিএন একচ্ছত্র লক:</b> ছদ্মবেশী বা বাইপাস ভিপিএন ব্লক</div>
+                        <div>✅ <b>মোবাইল-অনলি আনইনস্টল লক:</b> ফ্ল্যাশ ছাড়া ডিলিট অসম্ভব</div>
+                    </div>
+
+                    <button class="btn" style="width: 100%; height: 50px;" onclick="activateMasterLock()">আমি একমত ও চিরতরে সক্রিয় করুন</button>
+                    <div style="text-align: center; font-size: 11px; color: #64748B; margin-top: 14px;">🔒 ১০০% ব্যক্তিগত। পরিবারের কারও কাছে ডেটা যাবে না।</div>
+                </div>
+
+                <!-- স্ক্রিন ৩: সিক্রেট ভল্ট ড্যাশবোর্ড -->
+                <div id="screenVault" class="screen hidden" style="background: #0F172A;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h3 style="color: #38BDF8; font-size: 16px;">শুদ্ধ গার্ড সিক্রেট ড্যাশবোর্ড</h3>
+                        <button onclick="lockBackToCalc()" style="background: #334155; border: none; color: white; padding: 4px 8px; border-radius: 6px; font-size: 11px; cursor: pointer;">লক করুন</button>
+                    </div>
+
+                    <div style="background: #1E293B; padding: 14px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid #10B981;">
+                        <div style="font-size: 12px; color: #94A3B8;">পবিত্রতার দিন গণনা (Clean Streak)</div>
+                        <div style="font-size: 28px; font-weight: bold; color: #F59E0B;">১৪ দিন ৭ ঘণ্টা</div>
+                        <div style="font-size: 11px; color: #34D399;">আলহামদুলিল্লাহ! আপনি নিরাপদ রয়েছেন।</div>
+                    </div>
+
+                    <div style="font-size: 12px; color: #CBD5E1; line-height: 1.9;">
+                        <div>🛡️ <b>ডিভাইস অ্যাডমিন:</b> <span class="badge badge-green">Locked (Anti-Uninstall)</span></div>
+                        <div>🔍 <b>টেলিগ্রাম সার্চ ইনস্পেক্টর:</b> <span class="badge badge-green">Active (0.01s)</span></div>
+                        <div>🔒 <b>Always-On VPN:</b> <span class="badge badge-green">Monopoly Active</span></div>
+                        <div>🚫 <b>প্রাইভেট ডিএনএস:</b> <span class="badge badge-green">Protected</span></div>
+                        <div>💳 <b>বিকাশ সাবস্ক্রিপশন:</b> <span id="vaultSubStatus" class="badge badge-green">Pro Active (৳৫০/মাস)</span></div>
+                    </div>
+
+                    <div style="margin-top: auto; padding-top: 15px;">
+                        <button class="btn btn-danger" style="width: 100%;" onclick="triggerPanic()">জরুরি ইমার্জেন্সি ফোকাস বাটন</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ডান দিকের কলাম: ফেসবুক সিমুলেটর ও টেস্ট ল্যাব -->
+        <div class="panel-container">
+            
+            <!-- কার্ড ১: ফেসবুক সোশ্যাল ফিড ও হানি-ট্র্যাপ সিমুলেটর -->
+            <div class="card">
+                <h2>📱 ফেসবুক ফিড ও ক্লিকবেট হানি-ট্র্যাপ শিল্ড</h2>
+                <p style="font-size: 13px; color: #94A3B8; margin-bottom: 10px;">
+                    বোরহান ভাইয়ের চিহ্নিত সমস্যা: ফেসবুকে ড. জাকির নায়েকের মতো সম্মানিত ব্যক্তিত্বের ছবি দিয়ে কমেন্টে টেলিগ্রামের চটি চ্যানেলে নিয়ে যাওয়ার ফাঁদ।
+                </p>
+
+                <!-- সিমুলেটেড ফেসবুক পোস্ট -->
+                <div class="fb-post">
+                    <div class="fb-header">
+                        <div class="fb-avatar">🕌</div>
+                        <div>
+                            <div style="font-weight: bold; font-size: 14px;">ইসলামিক নলেজ পেজ (ভুয়া পোস্টার)</div>
+                            <div style="font-size: 11px; color: #B0B3B8;">Sponsored · 2 hrs ago</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 14px; margin-bottom: 8px;">
+                        "বউ ছাড়া যাদের সাথে সহবাস জায়েজ বলেছেন ড. জাকির নায়েক! পুরো ভিডিওর গোপন রহস্য দেখুন..."
+                    </div>
+                    
+                    <!-- ছবি ও স্বয়ংক্রিয় এআই ব্লার প্রদর্শন (১০০% নিরাপদ ও হালাল নমুনা) -->
+                    <div class="fb-media-container">
+                        <div id="fbDemoImage" class="fb-image blurred" style="background: linear-gradient(135deg, #1E293B, #0F172A); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #9CA3AF; text-align: center; padding: 20px; border: 1px dashed #475569;">
+                            <div style="font-size: 36px; margin-bottom: 6px;">🔞🚫</div>
+                            <div style="font-weight: bold; color: #F87171; font-size: 13px;">[সোশ্যাল মিডিয়ার আপত্তিকর ছবির নমুনা]</div>
+                            <div style="font-size: 11px; color: #94A3B8; margin-top: 4px;">আসল ফেসবুকে এআই নিজে থেকেই এমন ছবি ঝাপসা করে দেয়</div>
+                        </div>
+                        <div id="fbBlurOverlay" class="blur-overlay">
+                            <span style="font-size: 26px;">🛡️</span>
+                            <span>শুদ্ধ গার্ড এআই: খোলামেলা ছবি স্বয়ংক্রিয় ব্লার করা হয়েছে</span>
+                            <button onclick="toggleBlurPreview()" style="margin-top: 8px; background: rgba(0,0,0,0.5); border: 1px solid #38BDF8; color: #38BDF8; padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">ব্লার টগল দেখুন</button>
+                        </div>
+                    </div>
+
+                    <!-- কমেন্টের ফাঁদ লিংক -->
+                    <div class="fb-comment-box">
+                        <div style="font-weight: bold; color: #38BDF8; margin-bottom: 4px;">শীর্ষ কমেন্ট (পিন করা):</div>
+                        <div>ভিডিও দেখতে নিচের টেলিগ্রাম লিংকে যুক্ত হন 👉 <span class="fb-trap-link" onclick="triggerTrapClick()">https://t.me/joinchat/choti_boudi_leak_18</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- কার্ড ২: বিকাশ / নগদ সহজ সাবস্ক্রিপশন চেকআউট -->
+            <div class="card">
+                <h2>💳 বিকাশ ও নগদ সহজ সাবস্ক্রিপশন (মাত্র ৳৫০/মাস)</h2>
+                <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+                    <div style="font-size: 13px; color: #CBD5E1; flex: 1;">
+                        দেশীয় পেমেন্ট মেথড দিয়ে ছাত্র ও তরুণরা যেকোনো সময় সার্ভিস সচল রাখতে পারবে।
+                    </div>
+                    <button class="btn btn-bkash" onclick="openBkashCheckout()">বিকাশে রিনিউ করুন (৳৫০)</button>
+                </div>
+            </div>
+
+            <!-- কার্ড ৩: আসল সফটওয়্যার প্যাকেজের অবস্থান -->
+            <div class="card" style="border: 1px solid #10B981;">
+                <h2 style="color: #34D399;">📦 আসল সফটওয়্যার কোডগুলো কোথায়?</h2>
+                <div style="font-size: 13px; color: #CBD5E1; line-height: 1.8;">
+                    <div>১. <b>ক্রোম এক্সটেনশন (কম্পিউটার ব্রাউজার):</b> <code style="color: #38BDF8;">shuddho-guard/web-extension/</code> ফোল্ডারে <code>INSTALL_GUIDE.bat</code> আছে।</div>
+                    <div>২. <b>উইন্ডোজ ১৮+ সাইট ব্লকার:</b> <code style="color: #38BDF8;">shuddho-guard/windows-client/</code> ফোল্ডারে <code>install-windows-service.bat</code> আছে।</div>
+                    <div>৩. <b>মোবাইল অ্যাপ (Kotlin/Android):</b> <code style="color: #38BDF8;">shuddho-guard/android/</code> ফোল্ডারে পুরো অ্যাপের কোড রেডি।</div>
+                </div>
+            </div>
+
+            <!-- কার্ড ৪: কার্নেল ও সিস্টেম লগ -->
+            <div class="card">
+                <h2>📋 সিস্টেম ও সিকিউরিটি রিয়েল-টাইম লগ</h2>
+                <div id="systemLog" class="log-box">
+                    [SYSTEM] শুদ্ধ গার্ড কোর ইঞ্জিন লোডেড...<br>
+                    [SHIELD] ফেসবুক ও সোশ্যাল মিডিয়া AI ব্লারার সক্রিয়...<br>
+                    [WATCHER] টেলিগ্রাম হানি-ট্র্যাপ ইন্টারসেপ্টর প্রস্তুত...
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        let calcExpr = "";
+        let isMasterActivated = false;
+
+        function log(msg) {
+            const box = document.getElementById("systemLog");
+            const time = new Date().toLocaleTimeString();
+            box.innerHTML += `<br>[${time}] ${msg}`;
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function autoFillPin() {
+            calcExpr = "1234";
+            document.getElementById("calcDisplay").innerText = "1234=";
+            setTimeout(() => {
+                pressCalc('=');
+            }, 300);
+        }
+
+        function pressCalc(ch) {
+            const display = document.getElementById("calcDisplay");
+            if (ch === 'C') {
+                calcExpr = "";
+                display.innerText = "0";
+                return;
+            }
+            if (ch === '=') {
+                if (calcExpr === "1234") {
+                    log("🔑 সিক্রেট মাস্টার পিন মিলে গেছে! ভল্ট আনলক হচ্ছে...");
+                    document.getElementById("screenCalc").classList.add("hidden");
+                    if (!isMasterActivated) {
+                        document.getElementById("screenOnboarding").classList.remove("hidden");
+                    } else {
+                        document.getElementById("screenVault").classList.remove("hidden");
+                    }
+                    calcExpr = "";
+                    display.innerText = "0";
+                    return;
+                }
+                try {
+                    display.innerText = eval(calcExpr.replace(/×/g, '*').replace(/÷/g, '/')) || "0";
+                } catch(e) {
+                    display.innerText = "Error";
+                }
+                calcExpr = "";
+                return;
+            }
+            calcExpr += ch;
+            display.innerText = calcExpr;
+        }
+
+        function activateMasterLock() {
+            isMasterActivated = true;
+            log("🔒 [লকডাউন] ওয়ান-ক্লিক মাস্টার পারমিশন সফল!");
+            log("🛡️ Device Administrator সক্রিয়! আন-ইনস্টল বাটন লক করা হয়েছে।");
+            log("🌐 Always-On VPN স্লট দখল করা হয়েছে। SafeSearch কার্যকর।");
+            document.getElementById("screenOnboarding").classList.add("hidden");
+            document.getElementById("screenVault").classList.remove("hidden");
+        }
+
+        function lockBackToCalc() {
+            document.getElementById("screenVault").classList.add("hidden");
+            document.getElementById("screenCalc").classList.remove("hidden");
+            log("🔒 ক্যালকুলেটর ছদ্মবেশে ফিরে যাওয়া হয়েছে।");
+        }
+
+        function triggerPanic() {
+            alert("ধৈর্য ধরুন! চোখ বন্ধ করুন, ৩ বার গভীর শ্বাস নিন এবং 'আস্তাগফিরুল্লাহ' পাঠ করুন। আপনার মন শান্ত হয়ে যাবে।");
+            log("🚨 ইমার্জেন্সি ফোকাস মোড ট্রিগার হয়েছে।");
+        }
+
+        function toggleBlurPreview() {
+            const img = document.getElementById('fbDemoImage');
+            const overlay = document.getElementById('fbBlurOverlay');
+            if (img.classList.contains('blurred')) {
+                img.classList.remove('blurred');
+                overlay.style.display = 'none';
+                log("⚠️ [টেস্ট] ছবি থেকে ব্লার সরানো হলো (অরক্ষিত দৃশ্য)");
+            } else {
+                img.classList.add('blurred');
+                overlay.style.display = 'flex';
+                log("🛡️ [সুরক্ষিত] এআই ইঞ্জিন আপত্তিকর ছবি পুনরায় ব্লার করেছে");
+            }
+        }
+
+        function triggerTrapClick() {
+            log("🚨 [INTERCEPT] ব্যবহারকারী ফেসবুক কমেন্টের টেলিগ্রাম লিংকে ক্লিক করেছেন!");
+            log("🛑 [TRAP DETECTED] কি-ওয়ার্ড 'choti/18+' শনাক্ত! শুদ্ধ গার্ড ব্রাউজারের নেভিগেশন বন্ধ করে দিল!");
+            alert("🚨 বিপজ্জনক ফাঁদ শনাক্ত হয়েছে!\n\nআপনি যে লিঙ্কটিতে ক্লিক করেছেন, সেটি একটি প্রতারণামূলক পোস্টের অধীনে টেলিগ্রামের নোংরা চ্যানেলের দিকে নিয়ে যাচ্ছিল।\n\n🛡️ শুদ্ধ গার্ড আপনাকে রক্ষা করেছে!");
+        }
+
+        function openBkashCheckout() {
+            const num = prompt("বিকাশ অ্যাকাউন্ট নম্বর প্রদান করুন:", "017XXXXXXXX");
+            if (num) {
+                alert(`অভিনন্দন! আপনার বিকাশ (${num}) থেকে ৳৫০ সফলভাবে গৃহীত হয়েছে। শুদ্ধ গার্ড প্রো আগামী ৩০ দিনের জন্য সক্রিয় হলো।`);
+                log(`💳 বিকাশ পেমেন্ট সম্পন্ন: ৳৫০ (রিনিউয়াল স্ট্যাটাস: প্রো অ্যাক্টিভ)`);
+                document.getElementById('vaultSubStatus').innerText = "Pro Active (৳৫০/মাস)";
+            }
+        }
+    </script>
+</body>
+</html>
