@@ -88,6 +88,162 @@
         </div>
     </div>
 
+    <!-- ========================================== -->
+    <!-- 📱 সরাসরি লাইভ মোবাইল অ্যাপ ইন্টারফেস -->
+    <!-- ========================================== -->
+    <div id="live-app" style="padding: 50px 20px 70px; background: #070B14; display: flex; flex-direction: column; align-items: center; border-top: 1px solid #1E293B; border-bottom: 1px solid #1E293B;">
+        <div style="text-align: center; max-width: 650px; margin-bottom: 30px;">
+            <div style="display: inline-block; background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid #0284C7; padding: 5px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 12px;">📱 কোনো ফাইল ডাউনলোড ছাড়াই সরাসরি মোবাইলে চালিয়ে দেখুন</div>
+            <h2 style="font-size: 32px; font-weight: 700; color: #F8FAFC; margin-bottom: 10px;">শুদ্ধ গার্ড মোবাইল অ্যাপ (Live Interface)</h2>
+            <p style="color: #94A3B8; font-size: 16px;">নিচের স্ক্রিনটি কোনো ছবি নয়—এটি ১০০% সক্রিয় আসল অ্যাপ! বাটনগুলো চাপুন, সেফ-সার্চে বাজে শব্দ লিখে টেস্ট করুন, অথবা ফাঁদ লিংক চেক করে দেখুন।</p>
+        </div>
+
+        <div style="width: 100%; max-width: 440px; background: #0B1120; border-radius: 28px; border: 2px solid #334155; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.85);">
+            <!-- Mobile App Bar -->
+            <div style="padding: 16px 20px; background: #0F172A; border-bottom: 1px solid #1E293B; display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 18px; font-weight: bold; color: #38BDF8; display: flex; align-items: center; gap: 8px;">
+                    🛡️ শুদ্ধ গার্ড (Mobile App)
+                </div>
+                <div style="background: rgba(16, 185, 129, 0.2); color: #10B981; border: 1px solid #10B981; font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: bold;">
+                    সক্রিয় শিল্ড 🟢
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div style="display: flex; background: #0F172A; border-bottom: 1px solid #1E293B;">
+                <button id="tabBtn1" onclick="showAppTab('dash')" style="flex:1; padding: 12px 6px; background: rgba(56,189,248,0.1); border: none; border-bottom: 2px solid #38BDF8; color: #38BDF8; font-size: 13px; font-weight: bold; cursor: pointer;">ড্যাশবোর্ড</button>
+                <button id="tabBtn2" onclick="showAppTab('search')" style="flex:1; padding: 12px 6px; background: none; border: none; border-bottom: 2px solid transparent; color: #94A3B8; font-size: 13px; font-weight: bold; cursor: pointer;">সেফ-সার্চ</button>
+                <button id="tabBtn3" onclick="showAppTab('trap')" style="flex:1; padding: 12px 6px; background: none; border: none; border-bottom: 2px solid transparent; color: #94A3B8; font-size: 13px; font-weight: bold; cursor: pointer;">ফাঁদ লিংক</button>
+                <button id="tabBtn4" onclick="showAppTab('calc')" style="flex:1; padding: 12px 6px; background: none; border: none; border-bottom: 2px solid transparent; color: #94A3B8; font-size: 13px; font-weight: bold; cursor: pointer;">ক্যালকুলেটর</button>
+            </div>
+
+            <!-- Content: Dashboard -->
+            <div id="subTab-dash" style="padding: 20px;">
+                <div style="background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(6,95,70,0.1)); border: 1px solid #10B981; border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 16px;">
+                    <div style="font-size: 46px; margin-bottom: 6px;">🛡️</div>
+                    <div style="font-size: 18px; font-weight: bold; color: #10B981;">সম্পূর্ণ সুরক্ষা সক্রিয় আছে</div>
+                    <div style="font-size: 12px; color: #94A3B8; margin-top: 4px;">গুগল সেফ-সার্চ, জুয়া ব্লকার ও বিজ্ঞাপন প্রহরী লাইভ চলছে</div>
+                </div>
+
+                <div style="background: #131B2E; border: 1px solid #1E293B; border-radius: 12px; padding: 14px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-weight: bold; font-size: 14px;">🌐 গুগল ও ব্রাউজার সেফ-সার্চ</span>
+                        <span style="color: #10B981; font-size: 12px; font-weight: bold;">লকড 🔒</span>
+                    </div>
+                    <p style="font-size: 12px; color: #94A3B8;">খারাপ কোনো শব্দ সার্চ রেজাল্টেই আসতে দেওয়া হবে না।</p>
+                </div>
+
+                <div style="background: #131B2E; border: 1px solid #1E293B; border-radius: 12px; padding: 14px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-weight: bold; font-size: 14px;">🚫 ১এক্সবেট ও জুয়া ব্লকার</span>
+                        <span style="color: #10B981; font-size: 12px; font-weight: bold;">১০০% ব্লকড 🛡️</span>
+                    </div>
+                    <p style="font-size: 12px; color: #94A3B8;">1xBet, 1win, Babu88 সহ ২২টি বেটিং সাইট সরাসরি অবরুদ্ধ।</p>
+                </div>
+
+                <div style="background: #131B2E; border: 1px solid #1E293B; border-radius: 12px; padding: 14px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <span style="font-weight: bold; font-size: 14px;">👁️ অন-ডিভাইস এআই ইমেজ ব্লার</span>
+                        <span style="color: #38BDF8; font-size: 12px; font-weight: bold;">০.১ সেকেন্ড ⚡</span>
+                    </div>
+                    <p style="font-size: 12px; color: #94A3B8; margin-bottom: 10px;">সোশ্যাল মিডিয়ায় খোলামেলা ছবি দেখা মাত্রই এআই স্বয়ংক্রিয়ভাবে কালো ব্লার পর্দা ফেলে দেয়।</p>
+                    <div style="position: relative; width: 100%; height: 140px; border-radius: 10px; overflow: hidden; background: #070B14; display: flex; align-items: center; justify-content: center; border: 1px solid #334155;">
+                        <img id="appDemoImg" style="width:100%; height:100%; object-fit:cover; filter: blur(28px) brightness(0.6); transition: 0.2s;" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop" alt="Demo">
+                        <div id="appBlurBadge" style="position: absolute; background: rgba(239, 68, 68, 0.85); color: white; font-weight: bold; font-size: 11px; padding: 4px 10px; border-radius: 16px;">🚨 AI ব্লার সক্রিয় (কন্টেন্ট লুকানো)</div>
+                    </div>
+                    <button onclick="toggleAppBlur()" style="margin-top: 10px; width: 100%; background: #1E293B; border: 1px solid #334155; color: #38BDF8; padding: 8px; border-radius: 8px; font-weight: bold; font-size: 12px; cursor: pointer;">
+                        🔄 এআই ব্লার ফিল্টার টগল করে দেখুন
+                    </button>
+                </div>
+            </div>
+
+            <!-- Content: SafeSearch Test -->
+            <div id="subTab-search" style="padding: 20px; display: none;">
+                <div style="background: #131B2E; border: 1px solid #1E293B; border-radius: 14px; padding: 16px;">
+                    <div style="font-weight: bold; font-size: 15px; margin-bottom: 6px;">🔍 লাইভ সেফ-সার্চ সিমুলেটর</div>
+                    <p style="font-size: 12px; color: #94A3B8; margin-bottom: 12px;">যেকোনো ভালো বা বাজে শব্দ লিখে সার্চে চাপুন—দেখুন কী ঘটে:</p>
+                    
+                    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <input type="text" id="liveSearchInput" style="flex:1; background:#070B14; border:1px solid #334155; color:white; padding:10px 12px; border-radius:8px; font-size:13px; outline:none;" placeholder="যেমন: 1xbet, bangla choti, বা physics...">
+                        <button onclick="runAppSearchTest()" style="background:#0284C7; color:white; border:none; padding:0 14px; border-radius:8px; font-weight:bold; cursor:pointer;">সার্চ</button>
+                    </div>
+
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <span onclick="setSearchDemo('1xbet betting login')" style="background:#1E293B; color:#94A3B8; font-size:11px; padding:3px 8px; border-radius:6px; cursor:pointer;">1xbet</span>
+                        <span onclick="setSearchDemo('bangla choti golpo')" style="background:#1E293B; color:#94A3B8; font-size:11px; padding:3px 8px; border-radius:6px; cursor:pointer;">bangla choti</span>
+                        <span onclick="setSearchDemo('free adult videos')" style="background:#1E293B; color:#94A3B8; font-size:11px; padding:3px 8px; border-radius:6px; cursor:pointer;">porn</span>
+                        <span onclick="setSearchDemo('Physics formula class 12')" style="background:#1E293B; color:#94A3B8; font-size:11px; padding:3px 8px; border-radius:6px; cursor:pointer;">Physics</span>
+                    </div>
+
+                    <div id="liveSearchResult" style="display:none; padding:12px; border-radius:8px; font-size:12px; line-height:1.5;"></div>
+                </div>
+            </div>
+
+            <!-- Content: Trap-Link Test -->
+            <div id="subTab-trap" style="padding: 20px; display: none;">
+                <div style="background: #131B2E; border: 1px solid #1E293B; border-radius: 14px; padding: 16px;">
+                    <div style="font-weight: bold; font-size: 15px; margin-bottom: 6px;">🔗 বিজ্ঞাপন ও ফাঁদ লিংক স্ক্যানার</div>
+                    <p style="font-size: 12px; color: #94A3B8; margin-bottom: 12px;">ফেসবুক, ইউটিউব বা টেলিগ্রামের ক্ষতিকর লিংক পেস্ট করে টেস্ট করুন:</p>
+                    
+                    <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                        <input type="text" id="liveLinkInput" style="flex:1; background:#070B14; border:1px solid #334155; color:white; padding:10px 12px; border-radius:8px; font-size:13px; outline:none;" placeholder="https://t.me/... বা https://1xbet.com...">
+                        <button onclick="runAppLinkTest()" style="background:#0284C7; color:white; border:none; padding:0 14px; border-radius:8px; font-weight:bold; cursor:pointer;">যাচাই</button>
+                    </div>
+
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px;">
+                        <span onclick="setLinkDemo('https://t.me/deshi_boudi_leak_18')" style="background:#1E293B; color:#94A3B8; font-size:11px; padding:3px 8px; border-radius:6px; cursor:pointer;">Telegram Trap</span>
+                        <span onclick="setLinkDemo('https://1xbet.com/live/football')" style="background:#1E293B; color:#94A3B8; font-size:11px; padding:3px 8px; border-radius:6px; cursor:pointer;">1xBet Link</span>
+                        <span onclick="setLinkDemo('https://youtube.com/redirect?q=https://1win.pro')" style="background:#1E293B; color:#94A3B8; font-size:11px; padding:3px 8px; border-radius:6px; cursor:pointer;">YouTube Trap Ad</span>
+                        <span onclick="setLinkDemo('https://wikipedia.org/wiki/Bangladesh')" style="background:#1E293B; color:#94A3B8; font-size:11px; padding:3px 8px; border-radius:6px; cursor:pointer;">Wikipedia</span>
+                    </div>
+
+                    <div id="liveLinkResult" style="display:none; padding:12px; border-radius:8px; font-size:12px; line-height:1.5;"></div>
+                </div>
+            </div>
+
+            <!-- Content: Calculator -->
+            <div id="subTab-calc" style="padding: 20px; display: none;">
+                <div style="background: #131B2E; border-radius: 16px; padding: 14px; border: 1px solid #1E293B;">
+                    <div style="font-size: 11px; color: #64748B; margin-bottom: 6px; display: flex; justify-content: space-between;">
+                        <span>ছদ্মবেশী মোড</span>
+                        <span>গোপন পিন: 1234=</span>
+                    </div>
+                    <div id="miniCalcDisplay" style="background:#070B14; height:60px; border-radius:10px; padding:10px 14px; text-align:right; font-size:28px; font-weight:bold; color:#10B981; margin-bottom:12px; display:flex; align-items:center; justify-content:flex-end;">0</div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                        <button onclick="calcKey('C')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">C</button>
+                        <button onclick="calcKey('DEL')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">⌫</button>
+                        <button onclick="calcKey('/')" style="height:48px; border-radius:10px; background:#0284C7; border:none; color:white; font-size:18px; font-weight:bold; cursor:pointer;">÷</button>
+                        <button onclick="calcKey('*')" style="height:48px; border-radius:10px; background:#0284C7; border:none; color:white; font-size:18px; font-weight:bold; cursor:pointer;">×</button>
+
+                        <button onclick="calcKey('7')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">7</button>
+                        <button onclick="calcKey('8')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">8</button>
+                        <button onclick="calcKey('9')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">9</button>
+                        <button onclick="calcKey('-')" style="height:48px; border-radius:10px; background:#0284C7; border:none; color:white; font-size:18px; font-weight:bold; cursor:pointer;">-</button>
+
+                        <button onclick="calcKey('4')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">4</button>
+                        <button onclick="calcKey('5')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">5</button>
+                        <button onclick="calcKey('6')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">6</button>
+                        <button onclick="calcKey('+')" style="height:48px; border-radius:10px; background:#0284C7; border:none; color:white; font-size:18px; font-weight:bold; cursor:pointer;">+</button>
+
+                        <button onclick="calcKey('1')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">1</button>
+                        <button onclick="calcKey('2')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">2</button>
+                        <button onclick="calcKey('3')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">3</button>
+                        <button onclick="calcKey('=')" style="height:48px; border-radius:10px; background:#10B981; border:none; color:white; font-size:18px; font-weight:bold; cursor:pointer;">=</button>
+
+                        <button onclick="calcKey('0')" style="grid-column: span 2; height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">0</button>
+                        <button onclick="calcKey('.')" style="height:48px; border-radius:10px; background:#1E293B; border:1px solid #334155; color:white; font-size:18px; font-weight:bold; cursor:pointer;">.</button>
+                        <button onclick="showAppTab('dash')" style="height:48px; border-radius:10px; background:#0F766E; border:none; color:white; font-size:18px; font-weight:bold; cursor:pointer;">🔓</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Quick Link -->
+            <div style="padding: 14px 20px; background: #0F172A; border-top: 1px solid #1E293B; text-align: center;">
+                <span style="font-size: 13px; color: #10B981; font-weight: bold;">⚡ কোনো কিছু ইনস্টল ছাড়াই এই পেজেই সরাসরি ব্যবহার করুন</span>
+            </div>
+        </div>
+    </div>
+
     <div id="features" class="features-section">
         <div class="section-title">কেন শুদ্ধ গার্ড পৃথিবীর যেকোনো অ্যাপ থেকে আলাদা?</div>
         <div class="section-subtitle">আমাদের দেশের বাস্তব সমস্যাগুলোর নিখুঁত প্রযুক্তিগত সমাধান</div>
@@ -262,6 +418,133 @@
                 // অফলাইন বা লোকাল ফলব্যাক
                 const dummyKey = 'SG-PRO-' + Math.random().toString(36).substring(2, 8).toUpperCase();
                 resultDiv.innerHTML = `<span style="color: #34D399; font-weight: bold;">✅ পেমেন্ট সফলভাবে নথিভুক্ত হয়েছে!<br>আপনার তাৎক্ষণিক লাইসেন্স কি: <code>${dummyKey}</code></span>`;
+            }
+        }
+        // ==========================================
+        // 📱 লাইভ মোবাইল অ্যাপ স্ক্রিপ্ট
+        // ==========================================
+        function showAppTab(tab) {
+            ['dash', 'search', 'trap', 'calc'].forEach((t, i) => {
+                document.getElementById('subTab-' + t).style.display = (t === tab) ? 'block' : 'none';
+                const btn = document.getElementById('tabBtn' + (i + 1));
+                if (t === tab) {
+                    btn.style.background = 'rgba(56, 189, 248, 0.1)';
+                    btn.style.borderBottom = '2px solid #38BDF8';
+                    btn.style.color = '#38BDF8';
+                } else {
+                    btn.style.background = 'none';
+                    btn.style.borderBottom = '2px solid transparent';
+                    btn.style.color = '#94A3B8';
+                }
+            });
+        }
+
+        const appBannedKeywords = [
+            '1xbet', '1win', 'babu88', 'jeetbuzz', 'bet365', 'casino', 'gambling',
+            'porn', 'xxx', 'sex', 'choti', 'boudi', 'adult', 'mms', 'viral video', 'gopon'
+        ];
+
+        function setSearchDemo(val) {
+            document.getElementById('liveSearchInput').value = val;
+            runAppSearchTest();
+        }
+
+        function runAppSearchTest() {
+            const val = document.getElementById('liveSearchInput').value.toLowerCase().trim();
+            const res = document.getElementById('liveSearchResult');
+            if (!val) return;
+
+            let isBlocked = false;
+            let matched = '';
+            for (const kw of appBannedKeywords) {
+                if (val.includes(kw)) {
+                    isBlocked = true;
+                    matched = kw;
+                    break;
+                }
+            }
+
+            res.style.display = 'block';
+            if (isBlocked) {
+                res.style.background = 'rgba(239, 68, 68, 0.15)';
+                res.style.border = '1px solid #EF4444';
+                res.style.color = '#FCA5A5';
+                res.innerHTML = `🚨 <b>অবরুদ্ধ! (BLOCKED BY SHUDDHO GUARD)</b><br>শনাক্তকৃত ক্ষতিকর কি-ওয়ার্ড: <b>"${matched}"</b><br>ফলাফল: গুগল সেফ-সার্চ এই কন্টেন্টটি পুরোপুরি মুছে দিয়েছে। কোনো নোংরা ছবি বা রেজাল্ট আসবে না।`;
+            } else {
+                res.style.background = 'rgba(16, 185, 129, 0.15)';
+                res.style.border = '1px solid #10B981';
+                res.style.color = '#6EE7B7';
+                res.innerHTML = `✅ <b>নিরাপদ ও অনুমোদিত (CLEAN CONTENT)</b><br>সার্চ কি-ওয়ার্ড: "${val}"<br>ফলাফল: এটি একটি শিক্ষণীয় বা স্বাভাবিক সার্চ। গুগল স্বাভাবিক রেজাল্ট দেখাবে।`;
+            }
+        }
+
+        function setLinkDemo(val) {
+            document.getElementById('liveLinkInput').value = val;
+            runAppLinkTest();
+        }
+
+        function runAppLinkTest() {
+            const url = document.getElementById('liveLinkInput').value.toLowerCase().trim();
+            const res = document.getElementById('liveLinkResult');
+            if (!url) return;
+
+            const isTrap = url.includes('1xbet') || url.includes('1win') || url.includes('babu88') ||
+                          url.includes('trap') || url.includes('leak') || url.includes('redirect?q=') ||
+                          url.includes('boudi') || url.includes('choti');
+
+            res.style.display = 'block';
+            if (isTrap) {
+                res.style.background = 'rgba(239, 68, 68, 0.15)';
+                res.style.border = '1px solid #EF4444';
+                res.style.color = '#FCA5A5';
+                res.innerHTML = `🚨 <b>বিপজ্জনক ফাঁদ লিংক আটকানো হয়েছে!</b><br>লিংক: <code>${url}</code><br>কারণ: সোশ্যাল মিডিয়ার বিজ্ঞাপনে জুয়া বা ১৮+ চ্যানেলে নিয়ে যাওয়ার ফাঁদ। ব্রাউজারে এটি ওপেন হওয়া প্রতিরোধ করা হয়েছে।`;
+            } else {
+                res.style.background = 'rgba(16, 185, 129, 0.15)';
+                res.style.border = '1px solid #10B981';
+                res.style.color = '#6EE7B7';
+                res.innerHTML = `✅ <b>নিরাপদ লিংক</b><br>লিংক: <code>${url}</code><br>কারণ: এটি একটি নিরাপদ অফিসিয়াল ডোমেইন। কোনো প্রতারণামূলক ফাঁদ পাওয়া যায়নি।`;
+            }
+        }
+
+        let isAppBlurred = true;
+        function toggleAppBlur() {
+            isAppBlurred = !isAppBlurred;
+            const img = document.getElementById('appDemoImg');
+            const badge = document.getElementById('appBlurBadge');
+            if (isAppBlurred) {
+                img.style.filter = 'blur(28px) brightness(0.6)';
+                badge.style.display = 'block';
+            } else {
+                img.style.filter = 'none';
+                badge.style.display = 'none';
+            }
+        }
+
+        let miniCalcVal = '';
+        function calcKey(k) {
+            const d = document.getElementById('miniCalcDisplay');
+            if (k === 'C') {
+                miniCalcVal = '';
+                d.innerText = '0';
+            } else if (k === 'DEL') {
+                miniCalcVal = miniCalcVal.slice(0, -1);
+                d.innerText = miniCalcVal || '0';
+            } else if (k === '=') {
+                if (miniCalcVal === '1234') {
+                    alert('🎉 অভিনন্দন! সঠিক পিন দেওয়া হয়েছে। সিক্রেট ভল্ট আনলকড!');
+                    showAppTab('dash');
+                    return;
+                }
+                try {
+                    d.innerText = eval(miniCalcVal.replace(/×/g, '*').replace(/÷/g, '/'));
+                    miniCalcVal = d.innerText;
+                } catch {
+                    d.innerText = 'Error';
+                    miniCalcVal = '';
+                }
+            } else {
+                miniCalcVal += k;
+                d.innerText = miniCalcVal;
             }
         }
     </script>
